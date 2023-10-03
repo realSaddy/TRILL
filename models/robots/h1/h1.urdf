@@ -354,7 +354,7 @@ Stephen Brawner (brawner@gmail.com)
     </inertial>
   </link>
   <joint name="left_foot" type="fixed">
-    <origin xyz="0 0 -0.076" rpy="0 1.57079633 0" />
+    <origin xyz="0 0 -0.076" rpy="0 0 0" />
     <parent link="left_ankle_link" />
     <child link="left_foot_link" />
   </joint>
@@ -660,7 +660,7 @@ Stephen Brawner (brawner@gmail.com)
     </inertial>
   </link>
   <joint name="right_foot" type="fixed">
-    <origin xyz="0 0 -0.076" rpy="0 1.57079633 0" />
+    <origin xyz="0 0 -0.076" rpy="0 0 0" />
     <parent link="right_ankle_link" />
     <child link="right_foot_link" />
   </joint>

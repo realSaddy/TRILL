@@ -138,11 +138,11 @@ Whole-Body Contol:
 
   # Task Hierarchy Weights
   Hierarchy:
-    COM: 100.0
+    COM: 80.0
     CAM: 2.0
     # CAM: 0.0
-    Torso: 100.0
-    Upper Body: 0.1
+    Torso: 200.0
+    Upper Body: 20.0
     Hand Pos Min: 2.0e-0
     Hand Pos Max: 10.0e-0
     Hand Quat Min: 2.0e-0
@@ -264,7 +264,7 @@ Walking:
 
   ## !! This will be overwritten in main !! ##
   Initial Motion:
-    COM Height: 0.65  # m
+    COM Height: 0.8  # m
     Swing Height: 0.04  # m
     Footwidth: 0.28
     Forward Step: 0.2
