@@ -13,6 +13,9 @@ pin
 pyyaml
 robosuite==1.4.0
 robomimic==0.2.0
+wandb
+tensorboardX
+tensorboard
 gym
 wandb
 h5py

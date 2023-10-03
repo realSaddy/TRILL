@@ -1,6 +1,6 @@
 import numpy as np
 
-from pnc.draco_pnc.rolling_joint_constraint import DracoManipulationRollingJointConstraint
+# from pnc.draco_pnc.rolling_joint_constraint import DracoManipulationRollingJointConstraint
 from pnc.wbc.tci_container import TCIContainer
 from pnc.wbc.basic_task import BasicTask
 from pnc.wbc.basic_contact import SurfaceContact
@@ -31,39 +31,43 @@ class DracoManipulationTCIContainer(TCIContainer):
 
         # Upperbody joints
         upperbody_joint = [
-            'neck_pitch', 
-            'l_shoulder_fe', 'l_shoulder_aa', 'l_shoulder_ie',
-            'l_elbow_fe', 'l_wrist_ps', 'l_wrist_pitch', 'r_shoulder_fe',
-            'r_shoulder_aa', 'r_shoulder_ie', 'r_elbow_fe', 'r_wrist_ps',
-            'r_wrist_pitch'
+            'left_shoulder_pitch_joint',
+            'left_shoulder_roll_joint',
+            'left_shoulder_yaw_joint',
+            'left_elbow_joint',
+            'right_shoulder_pitch_joint',
+            'right_shoulder_roll_joint',
+            'right_shoulder_yaw_joint',
+            'right_elbow_joint',
+            'torso_joint'
         ]
         self._upper_body_task = BasicTask(robot, "SELECTED_JOINT",
                                           len(upperbody_joint),
                                           upperbody_joint, save_data)
         # Lhand Pos Task
         self._lhand_pos_task = BasicTask(robot, "LINK_XYZ", 3,
-                                         "l_hand_contact", save_data)
+                                         "left_hand_link", save_data)
         # Rhand Pos Task
         self._rhand_pos_task = BasicTask(robot, "LINK_XYZ", 3,
-                                         "r_hand_contact", save_data)
+                                         "right_hand_link", save_data)
         # Lhand Ori Task
         self._lhand_ori_task = BasicTask(robot, "LINK_ORI", 3,
-                                         "l_hand_contact", save_data)
+                                         "left_hand_link", save_data)
         # Rhand Ori Task
         self._rhand_ori_task = BasicTask(robot, "LINK_ORI", 3,
-                                         "r_hand_contact", save_data)
+                                         "right_hand_link", save_data)
         # Rfoot Pos Task
         self._rfoot_pos_task = BasicTask(robot, "LINK_XYZ", 3,
-                                         "r_foot_contact", save_data)
+                                         "right_foot_link", save_data)
         # Lfoot Pos Task
         self._lfoot_pos_task = BasicTask(robot, "LINK_XYZ", 3,
-                                         "l_foot_contact", save_data)
+                                         "left_foot_link", save_data)
         # Rfoot Ori Task
         self._rfoot_ori_task = BasicTask(robot, "LINK_ORI", 3,
-                                         "r_foot_contact", save_data)
+                                         "right_foot_link", save_data)
         # Lfoot Ori Task
         self._lfoot_ori_task = BasicTask(robot, "LINK_ORI", 3,
-                                         "l_foot_contact", save_data)
+                                         "left_foot_link", save_data)
 
         self._task_list = [
             self._com_task, 
@@ -98,11 +102,11 @@ class DracoManipulationTCIContainer(TCIContainer):
         # Initialize Contact
         # ======================================================================
         # Rfoot Contact
-        self._rfoot_contact = SurfaceContact(robot, "r_foot_contact", 0.115,
+        self._rfoot_contact = SurfaceContact(robot, "right_foot_link", 0.115,
                                              0.065, 0.3, save_data)
         self._rfoot_contact.rf_z_max = 1e-3  # Initial rf_z_max
         # Lfoot Contact
-        self._lfoot_contact = SurfaceContact(robot, "l_foot_contact", 0.115,
+        self._lfoot_contact = SurfaceContact(robot, "left_foot_link", 0.115,
                                              0.065, 0.3, save_data)
         self._lfoot_contact.rf_z_max = 1e-3  # Initial rf_z_max
 
@@ -111,9 +115,10 @@ class DracoManipulationTCIContainer(TCIContainer):
         # ======================================================================
         # Initialize Internal Constraint
         # ======================================================================
-        self._rolling_joint_constraint = DracoManipulationRollingJointConstraint(
-            robot)
-        self._internal_constraint_list = [self._rolling_joint_constraint]
+        # self._rolling_joint_constraint = DracoManipulationRollingJointConstraint(
+        #     robot)
+        # self._internal_constraint_list = [self._rolling_joint_constraint]
+        self._internal_constraint_list = []
 
     @property
     def com_task(self):

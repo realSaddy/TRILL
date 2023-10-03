@@ -314,7 +314,7 @@
                     material="metal" 
                     />
                 <geom name="geom_right_A1_col"
-                    type="box" size="0.125 0.075 0.0295" 
+                    type="box" size="0.2 0.1 0.0295" 
                     group="0"
                     pos="0 0.005 -0.046"
                     friction="1.5"
@@ -413,7 +413,7 @@
                     material="metal" 
                     />
                 <geom name="geom_left_A1_col"
-                    type="box" size="0.125 0.075 0.0295"
+                    type="box" size="0.2 0.1 0.0295"
                     group="0"
                     pos="0 -0.005 -0.046"
                     friction="1.5"

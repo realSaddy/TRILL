@@ -70,8 +70,8 @@ class DracoManipulationControlArchitecture(ControlArchitecture):
         self._dcm_tm = DCMTrajectoryManager(self._dcm_planner,
                                             self._tci_container.com_task,
                                             self._tci_container.torso_ori_task,
-                                            self._robot, "l_foot_contact",
-                                            "r_foot_contact")
+                                            self._robot, "left_foot_link",
+                                            "right_foot_link")
         self._dcm_tm.nominal_com_height = walking_config['Initial Motion']['COM Height']
         self._dcm_tm.t_additional_init_transfer = walking_config['Duration']['Additional Inititial Transfer']
         self._dcm_tm.t_contact_transition = walking_config['Duration']['Contact Trans']

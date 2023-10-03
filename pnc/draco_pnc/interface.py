@@ -19,7 +19,7 @@ class DracoManipulationInterface(Interface):
         super(DracoManipulationInterface, self).__init__()
 
         self._robot = PinocchioRobotSystem(
-            path_to_model + "/draco3.urdf",
+            path_to_model + "/h1.urdf",
             path_to_model, False, False)
 
         self._config = config

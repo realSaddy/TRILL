@@ -9,7 +9,7 @@ Simulation:
     Body Pos:
       - 0.0
       - 0.0
-      - 0.743
+      - 0.82
     Body Quat:
       - 0.0
       - 0.0
@@ -17,38 +17,33 @@ Simulation:
       - 1.0
     Joint Pos:
       # Upper Body
-      l_shoulder_fe: 0.0
-      l_shoulder_aa: 0.52360
-      l_shoulder_ie: 0.0
-      l_elbow_fe: -1.5708
-      l_wrist_ps:   0.0
-      l_wrist_pitch: 0.0
+      left_shoulder_pitch_joint: 0.0
+      left_shoulder_roll_joint: 0.0
+      left_shoulder_yaw_joint: 0.0
+      left_elbow_joint: 0.0
 
-      r_shoulder_fe: 0.0
-      r_shoulder_aa: -0.52360
-      r_shoulder_ie: 0.0
-      r_elbow_fe: -1.5708
-      r_wrist_ps:  0.0
-      r_wrist_pitch: 0.0
+      right_shoulder_pitch_joint: 0.0
+      right_shoulder_roll_joint: 0.0
+      right_shoulder_yaw_joint: 0.0
+      right_elbow_joint: 0.0
 
       # Lower Body
-      l_hip_ie: 0.0
-      l_hip_aa: 0.087266
-      l_hip_fe: -0.78540
-      l_knee_fe_jp: 0.78540
-      l_knee_fe_jd: 0.78540
-      l_ankle_fe: -0.78540
-      l_ankle_ie: -0.087266
+      left_hip_yaw_joint: 0.0
+      left_hip_roll_joint: 0.0
+      left_hip_pitch_joint: -0.55
+      left_knee_joint: 1.6
+      left_ankle_joint: -1.05
 
-      r_hip_ie: 0.0
-      r_hip_aa: -0.087266
-      r_hip_fe: -0.78540
-      r_knee_fe_jp: 0.78540
-      r_knee_fe_jd: 0.78540
-      r_ankle_fe: -0.78540
-      r_ankle_ie: 0.087266
+      right_hip_yaw_joint: 0.0
+      right_hip_roll_joint: 0.0
+      right_hip_pitch_joint: -0.55
+      right_knee_joint: 1.6
+      right_ankle_joint: -1.05
+
+      torso_joint: 0.0
+
     Aux Pos:
-      neck_pitch: 0.0
+      # neck_pitch: 0.0
 
 
 Action:
@@ -64,10 +59,10 @@ Action:
       6: turning_right
       7: balance
     aux:
-      neck:
-        0: forward
-        1: down
-        2: up
+      # neck:
+      #   0: forward
+      #   1: down
+      #   2: up
       
     gripper:
       left:
@@ -99,7 +94,7 @@ Action:
         - 0.04
         - -0.64
     aux:
-      neck: 0
+      # neck: 0
     gripper:
       left: 0
       right: 0
@@ -124,13 +119,13 @@ Gripper Control:
 
 Aux Control:
   Action:
-    neck:
-      forward: 
-        neck_pitch: 0.0
-      down: 
-        neck_pitch: 0.3
-      up: 
-        neck_pitch: -0.3
+    # neck:
+    #   forward: 
+    #     neck_pitch: 0.0
+    #   down: 
+    #     neck_pitch: 0.3
+    #   up: 
+    #     neck_pitch: -0.3
   Gain:
     kp:
       neck_pitch: 10.0
@@ -143,11 +138,11 @@ Whole-Body Contol:
 
   # Task Hierarchy Weights
   Hierarchy:
-    COM: 20.0
+    COM: 80.0
     CAM: 2.0
     # CAM: 0.0
-    Torso: 40.0
-    Upper Body: 0.1
+    Torso: 200.0
+    Upper Body: 20.0
     Hand Pos Min: 2.0e-0
     Hand Pos Max: 10.0e-0
     Hand Quat Min: 2.0e-0
@@ -170,18 +165,14 @@ Whole-Body Contol:
       - 100.0
       - 100.0
     Upper Body:
-      - 20.0
       - 50.0
       - 50.0
       - 50.0
       - 25.0
-      - 20.0
-      - 20.0
       - 50.0
       - 50.0
       - 50.0
       - 25.0
-      - 20.0
       - 20.0
     Hand Pos:
       - 400.0
@@ -198,7 +189,7 @@ Whole-Body Contol:
     Foot Quat:
       - 300.0
       - 300.0
-      - 300.0
+      - 0.0
 
   kd:
     COM:
@@ -222,14 +213,10 @@ Whole-Body Contol:
       - 20.0
       - 20.0
       - 12.0
-      - 8.0
-      - 8.0
       - 20.0
       - 20.0
       - 20.0
       - 12.0
-      - 8.0
-      - 8.0
     Hand Pos:
       - 60.0
       - 60.0
@@ -245,7 +232,7 @@ Whole-Body Contol:
     Foot Quat:
       - 30.0
       - 30.0
-      - 30.0
+      - 0.0
 
   # Regularization terms
   Reguralization:
@@ -277,7 +264,7 @@ Walking:
 
   ## !! This will be overwritten in main !! ##
   Initial Motion:
-    COM Height: 0.65  # m
+    COM Height: 0.8  # m
     Swing Height: 0.04  # m
     Footwidth: 0.28
     Forward Step: 0.2
@@ -337,58 +324,51 @@ Manipulation:
 
 Joint-Space Control:
   kp:
-    l_hip_ie: 1.0
-    l_hip_aa: 1.0
-    l_hip_fe: 1.0
-    l_knee_fe_jp: 1.0
-    l_knee_fe_jd: 1.0
-    l_ankle_fe: 1.0
-    l_ankle_ie: 1.0
-    l_shoulder_fe: 1.0
-    l_shoulder_aa: 1.0
-    l_shoulder_ie: 1.0
-    l_elbow_fe: 1.0
-    l_wrist_ps: 1.0
-    l_wrist_pitch: 1.0
-    neck_pitch: 1.0
-    r_hip_ie: 1.0
-    r_hip_aa: 1.0
-    r_hip_fe: 1.0
-    r_knee_fe_jp: 1.0
-    r_knee_fe_jd: 1.0
-    r_ankle_fe: 1.0
-    r_ankle_ie: 1.0
-    r_shoulder_fe: 1.0
-    r_shoulder_aa: 1.0
-    r_shoulder_ie: 1.0
-    r_elbow_fe: 1.0
-    r_wrist_ps: 1.0
-    r_wrist_pitch: 1.0
+    left_hip_yaw_joint: 1.0
+    left_hip_roll_joint: 1.0
+    left_hip_pitch_joint: 1.0
+    left_knee_joint: 1.0
+    left_ankle_joint: 1.0
+
+    left_shoulder_pitch_joint: 1.0
+    left_shoulder_roll_joint: 1.0
+    left_shoulder_yaw_joint: 1.0
+    left_elbow_joint: 1.0
+
+    right_hip_yaw_joint: 1.0
+    right_hip_roll_joint: 1.0
+    right_hip_pitch_joint: 1.0
+    right_knee_joint: 1.0
+    right_ankle_joint: 1.0
+
+    right_shoulder_pitch_joint: 1.0
+    right_shoulder_roll_joint: 1.0
+    right_shoulder_yaw_joint: 1.0
+    right_elbow_joint: 1.0
+
+    torso_joint: 1.0
+
   kd:
-    l_hip_ie: 0.0
-    l_hip_aa: 0.0
-    l_hip_fe: 0.0
-    l_knee_fe_jp: 0.0
-    l_knee_fe_jd: 0.0
-    l_ankle_fe: 0.0
-    l_ankle_ie: 0.0
-    l_shoulder_fe: 0.0
-    l_shoulder_aa: 0.0
-    l_shoulder_ie: 0.0
-    l_elbow_fe: 0.0
-    l_wrist_ps: 0.0
-    l_wrist_pitch: 0.0
-    neck_pitch: 0.0
-    r_hip_ie: 0.0
-    r_hip_aa: 0.0
-    r_hip_fe: 0.0
-    r_knee_fe_jp: 0.0
-    r_knee_fe_jd: 0.0
-    r_ankle_fe: 0.0
-    r_ankle_ie: 0.0
-    r_shoulder_fe: 0.0
-    r_shoulder_aa: 0.0
-    r_shoulder_ie: 0.0
-    r_elbow_fe: 0.0
-    r_wrist_ps: 0.0
-    r_wrist_pitch: 0.0
+    left_hip_yaw_joint: 0.0
+    left_hip_roll_joint: 0.0
+    left_hip_pitch_joint: 0.0
+    left_knee_joint: 0.0
+    left_ankle_joint: 0.0
+
+    left_shoulder_pitch_joint: 0.0
+    left_shoulder_roll_joint: 0.0
+    left_shoulder_yaw_joint: 0.0
+    left_elbow_joint: 0.0
+
+    right_hip_yaw_joint: 0.0
+    right_hip_roll_joint: 0.0
+    right_hip_pitch_joint: 0.0
+    right_knee_joint: 0.0
+    right_ankle_joint: 0.0
+
+    right_shoulder_pitch_joint: 0.0
+    right_shoulder_roll_joint: 0.0
+    right_shoulder_yaw_joint: 0.0
+    right_elbow_joint: 0.0
+
+    torso_joint: 0.0
