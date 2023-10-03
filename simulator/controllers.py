@@ -70,7 +70,7 @@ class WheeledArmController(object):
         pass
 
 
-class DracoController(object):
+class H1Controller(object):
 
     def __init__(self, config, path_to_robot_model) -> None:
         
@@ -122,9 +122,9 @@ class DracoController(object):
                                                'quat': np.array(self._init_state['Body Quat'])})
         self._robot_target['body_vel'].update({'pos': np.zeros(3), 'rpy': np.zeros(3)})
 
-        self._aux_target['joint_pos'].update(self._init_state['Aux Pos'])
-        self._aux_target['joint_vel'].update({key: 0.0 for key in self._aux_target['joint_pos'].keys()})
-        self._aux_target['joint_trq'].update({key: 0.0 for key in self._aux_target['joint_pos'].keys()})
+        # self._aux_target['joint_pos'].update(self._init_state['Aux Pos'])
+        # self._aux_target['joint_vel'].update({key: 0.0 for key in self._aux_target['joint_pos'].keys()})
+        # self._aux_target['joint_trq'].update({key: 0.0 for key in self._aux_target['joint_pos'].keys()})
 
         self._right_gripper_target['joint_pos'].update({'gripper': 0.0})
         self._right_gripper_target['joint_vel'].update({key: 0.0 for key in self._right_gripper_target['joint_pos'].keys()})
@@ -223,12 +223,12 @@ class DracoController(object):
 
         command = self._interface.get_command(copy.deepcopy(self._sensor_data))
 
-        del command['joint_pos']['l_knee_fe_jp']
-        del command['joint_pos']['r_knee_fe_jp']
-        del command['joint_vel']['l_knee_fe_jp']
-        del command['joint_vel']['r_knee_fe_jp']
-        del command['joint_trq']['l_knee_fe_jp']
-        del command['joint_trq']['r_knee_fe_jp']
+        # del command['joint_pos']['l_knee_fe_jp']
+        # del command['joint_pos']['r_knee_fe_jp']
+        # del command['joint_vel']['l_knee_fe_jp']
+        # del command['joint_vel']['r_knee_fe_jp']
+        # del command['joint_trq']['l_knee_fe_jp']
+        # del command['joint_trq']['r_knee_fe_jp']
 
         return command
 

@@ -13,15 +13,29 @@ OBS_EEF_KEYS = [
             ]
 
 OBS_JOINT_KEYS = [
-        'r_hip_ie', 'r_hip_aa', 'r_hip_fe',
-        'r_knee_fe_jp', 'r_knee_fe_jd', 'r_ankle_fe', 'r_ankle_ie',
-        'l_hip_ie', 'l_hip_aa', 'l_hip_fe',
-        'l_knee_fe_jp', 'l_knee_fe_jd', 'l_ankle_fe', 'l_ankle_ie',
-        'r_shoulder_fe', 'r_shoulder_aa', 'r_shoulder_ie',
-        'r_elbow_fe', 'r_wrist_ps', 'r_wrist_pitch',
-        'l_shoulder_fe', 'l_shoulder_aa', 'l_shoulder_ie',
-        'l_elbow_fe', 'l_wrist_ps', 'l_wrist_pitch',
-        'neck_pitch',
+        'left_hip_yaw_joint',
+        'left_hip_roll_joint',
+        'left_hip_pitch_joint',
+        'left_knee_joint',
+        'left_ankle_joint',
+
+        'left_shoulder_pitch_joint',
+        'left_shoulder_roll_joint',
+        'left_shoulder_yaw_joint',
+        'left_elbow_joint',
+
+        'right_hip_yaw_joint',
+        'right_hip_roll_joint',
+        'right_hip_pitch_joint',
+        'right_knee_joint',
+        'right_ankle_joint',
+
+        'right_shoulder_pitch_joint',
+        'right_shoulder_roll_joint',
+        'right_shoulder_yaw_joint',
+        'right_elbow_joint',
+
+        'torso_joint',
         ]
 
 
@@ -131,9 +145,6 @@ class EnvWrapper(gym.Env):
 
         act_trajecory_right_rot = R.from_quat(self._cur_action['trajectory']['right_quat']).as_matrix() @ R.from_quat(act_right_quat).as_matrix()
         act_trajecory_left_rot = R.from_quat(self._cur_action['trajectory']['left_quat']).as_matrix() @ R.from_quat(act_left_quat).as_matrix()
-
-        # act_trajecory_right_rot = R.from_quat(self._cur_action['trajectory']['right_quat']).as_matrix() @ R.from_euler('xyz', act_right_euler).as_matrix()
-        # act_trajecory_left_rot = R.from_quat(self._cur_action['trajectory']['left_quat']).as_matrix() @ R.from_euler('xyz', act_left_euler).as_matrix()
 
         self._cur_action['trajectory']['right_quat'] = R.from_matrix(act_trajecory_right_rot).as_quat()
         self._cur_action['trajectory']['left_quat'] = R.from_matrix(act_trajecory_left_rot).as_quat()
