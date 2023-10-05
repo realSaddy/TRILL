@@ -19,17 +19,17 @@ class MobileBaseModel(RobotModel):
 
 class HumanoidModel(RobotModel):
     """
-    Base class for all manipulator models (robot arm(s) with gripper(s)).
+    Base class for all humanoid models.
 
     Args:
         fname (str): Path to relevant xml file from which to create this robot instance
-        idn (int or str): Number or some other unique identification string for this robot instance
+        idn (int or str, default=0): Number or some other unique identification string for this robot instance
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, fname, idn=0):
         # Always run super init first
-        super().__init__(**kwargs)
-
+        super().__init__(fname, idn)
+        
         # key: gripper name and value: gripper model
         self.grippers = OrderedDict()
 
@@ -49,7 +49,14 @@ class HumanoidModel(RobotModel):
 
 
     def _set_key_map(self):
-        raise NotImplementedError
+        """
+        Sets the key map for this robot
+        """
+        joints = self.get_element_names(self.worldbody, "joint")
+        actuators = self.get_element_names(self.worldbody, "actuator")
+        print(joints)
+        print(actuators)
+        self._key_map = {'joint': joints, 'actuator': actuator}
 
 
     def add_gripper(self, gripper, arm_name=None):
