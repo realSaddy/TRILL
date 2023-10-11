@@ -187,7 +187,7 @@ class BaseEnv():
         self.grippers={}
         for key in [ 'right', 'left']:
             self.grippers[key] = SakeEZGripper(idn=key)
-            self.robot.add_gripper(self.grippers[key], arm_name=self.robot.naming_prefix+self.robot._eef_name[key])
+            self.robot.add_gripper(self.grippers[key], arm_name=self.robot._eef_name[key])
         self.world.merge(self.robot)
 
 

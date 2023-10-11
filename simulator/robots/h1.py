@@ -7,63 +7,9 @@ cwd = os.getcwd()
 PATH_TO_ROBOT_MODEL = os.path.expanduser(cwd+'/models/robots/h1')
 PATH_TO_ROBOT_XML = os.path.join(PATH_TO_ROBOT_MODEL, 'h1.xml')
 
-H1_MAP = {
-    'joint': {
-        'left_shoulder_pitch_joint':    'left_shoulder_pitch_joint',
-        'left_shoulder_roll_joint':     'left_shoulder_roll_joint',
-        'left_shoulder_yaw_joint':      'left_shoulder_yaw_joint',
-        'left_elbow_joint':             'left_elbow_joint',
-
-        'right_shoulder_pitch_joint':   'right_shoulder_pitch_joint',
-        'right_shoulder_roll_joint':    'right_shoulder_roll_joint',
-        'right_shoulder_yaw_joint':     'right_shoulder_yaw_joint',
-        'right_elbow_joint':            'right_elbow_joint',
-
-        'left_hip_yaw_joint':    'left_hip_yaw_joint',
-        'left_hip_roll_joint':  'left_hip_roll_joint',
-        'left_hip_pitch_joint': 'left_hip_pitch_joint',
-        'left_knee_joint':      'left_knee_joint',
-        'left_ankle_joint':     'left_ankle_joint',
-
-        'right_hip_yaw_joint':  'right_hip_yaw_joint',
-        'right_hip_roll_joint': 'right_hip_roll_joint',
-        'right_hip_pitch_joint':'right_hip_pitch_joint',
-        'right_knee_joint':     'right_knee_joint',
-        'right_ankle_joint':    'right_ankle_joint',
-
-        'torso_joint':          'torso_joint',
-    },
-
-    'actuator': {
-        'left_shoulder_pitch_joint':    'left_shoulder_pitch_joint',
-        'left_shoulder_roll_joint':     'left_shoulder_roll_joint',
-        'left_shoulder_yaw_joint':      'left_shoulder_yaw_joint',
-        'left_elbow_joint':             'left_elbow_joint',
-
-        'right_shoulder_pitch_joint':   'right_shoulder_pitch_joint',
-        'right_shoulder_roll_joint':    'right_shoulder_roll_joint',
-        'right_shoulder_yaw_joint':     'right_shoulder_yaw_joint',
-        'right_elbow_joint':            'right_elbow_joint',
-
-        'left_hip_yaw_joint':    'left_hip_yaw_joint',
-        'left_hip_roll_joint':  'left_hip_roll_joint',
-        'left_hip_pitch_joint': 'left_hip_pitch_joint',
-        'left_knee_joint':      'left_knee_joint',
-        'left_ankle_joint':     'left_ankle_joint',
-
-        'right_hip_yaw_joint':  'right_hip_yaw_joint',
-        'right_hip_roll_joint': 'right_hip_roll_joint',
-        'right_hip_pitch_joint':'right_hip_pitch_joint',
-        'right_knee_joint':     'right_knee_joint',
-        'right_ankle_joint':    'right_ankle_joint',
-
-        'torso_joint':          'torso_joint',
-    }
-}
-
 class H1(HumanoidModel):
     """
-    Panda is a sensitive single-arm robot designed by Franka.
+    H1 is a humanoid robot developed by Unitree. 
 
     Args:
         idn (int or str): Number or some other unique identification string for this robot instance
@@ -71,24 +17,6 @@ class H1(HumanoidModel):
 
     def __init__(self, idn=0):
         super().__init__(fname=PATH_TO_ROBOT_XML, idn=idn)
-
-        # Set joint damping
-        # self.set_joint_attribute(attrib="damping", values=np.array((0.1, 0.1, 0.1, 0.1, 0.1, 0.01, 0.01)))
-
-    # @property
-    # def default_mount(self):
-    #     return "Free"
-
-
-    def _set_key_map(self):
-        """
-        Sets the key map for this robot
-        """
-
-        self._key_map = {'joint': {}, 'actuator': {}}
-        self._key_map['joint'].update({key: self.naming_prefix+value for key, value in H1_MAP['joint'].items()})
-        self._key_map['actuator'].update({key: self.naming_prefix+value for key, value in H1_MAP['actuator'].items()})
-
 
     @property
     def default_gripper(self):

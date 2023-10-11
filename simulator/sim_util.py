@@ -29,7 +29,7 @@ def get_link_vel(sim, robot, link_name):
 
 def get_body_pos_vel(sim, robot):
     model, data = get_mujoco_objects(sim)
-    joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, robot.naming_prefix+'root')
+    joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, 'root')
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
 
@@ -53,10 +53,8 @@ def set_motor_impedance(sim, robot, command, kp, kd):
     for (pnc_key, pos_des), (_, vel_des), (_, trq_des) in zip(
             command['joint_pos'].items(), command['joint_vel'].items(),
             command['joint_trq'].items()):
-        mujoco_joint_key = key_map['joint'][pnc_key]
-        mujoco_actuator_key = key_map['actuator'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
-        actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, mujoco_actuator_key)
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, pnc_key)
+        actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, pnc_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         joint_qveladr = model.jnt_dofadr[joint_id]
         joint_pos = data.qpos[joint_qposadr]
@@ -76,9 +74,7 @@ def set_motor_trq(sim, robot, command):
     key_map = robot.key_map
     trq_applied = OrderedDict()
     for pnc_key, trq_des in command['joint_trq'].items():
-        mujoco_actuator_key = key_map['actuator'][pnc_key]
-        actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, mujoco_actuator_key)
-        # print(actuator_id)
+        actuator_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, pnc_key)
         trq_applied[actuator_id] = trq_des
     data.ctrl[list(trq_applied.keys())] = list(trq_applied.values())
 
@@ -89,8 +85,7 @@ def set_motor_pos(sim, robot, state):
     pos_applied = OrderedDict()
     vel_applied = OrderedDict()
     for pnc_key, pos_des in state['joint_pos'].items():
-        mujoco_joint_key = key_map['joint'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, pnc_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         pos_applied[joint_qposadr] = pos_des
     data.qpos[list(pos_applied.keys())] = list(pos_applied.values())
@@ -101,8 +96,7 @@ def set_ball_pos(sim, robot, state):
     pos_applied = OrderedDict()
     vel_applied = OrderedDict()
     for pnc_key, pos_des in state['joint_pos'].items():
-        mujoco_joint_key = key_map['joint'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, pnc_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         for qposadr_idx, val_idx in enumerate([3, 0, 1, 2]): pos_applied[joint_qposadr+qposadr_idx] = pos_des[val_idx]
     data.qpos[list(pos_applied.keys())] = list(pos_applied.values())
@@ -115,8 +109,7 @@ def set_motor_pos_vel(sim, robot, state):
     pos_applied = OrderedDict()
     vel_applied = OrderedDict()
     for (pnc_key, pos_des), (_, vel_des) in zip(state['joint_pos'].items(), state['joint_vel'].items()):
-        mujoco_joint_key = key_map['joint'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, pnc_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         joint_qveladr = model.jnt_dofadr[joint_id]
         pos_applied[joint_qposadr] = pos_des
@@ -127,7 +120,7 @@ def set_motor_pos_vel(sim, robot, state):
 
 def set_body_pos_vel(sim, robot, state):
     model, data = get_mujoco_objects(sim)
-    joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, robot.naming_prefix+'root')
+    joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, 'root')
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
     data.qpos[joint_qposadr:joint_qposadr+7] = np.concatenate((state['body_pos']['pos'], state['body_pos']['quat'][[3, 0, 1, 2]]))
@@ -140,8 +133,7 @@ def set_ball_pos_vel(sim, robot, state):
     pos_applied = OrderedDict()
     vel_applied = OrderedDict()
     for (pnc_key, pos_des), (_, vel_des) in zip(state['joint_pos'].items(), state['joint_vel'].items()):
-        mujoco_joint_key = key_map['joint'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, pnc_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         joint_qveladr = model.jnt_dofadr[joint_id]
         for qposadr_idx, val_idx in enumerate([3, 0, 1, 2]): pos_applied[joint_qposadr+qposadr_idx] = pos_des[val_idx]
@@ -199,10 +191,10 @@ def get_sensor_data(sim, robot):
     model, data = get_mujoco_objects(sim)
     sensor_data = OrderedDict()
 
-    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'base_com')
-    base_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'base')
-    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'left_hand')
-    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'right_hand')
+    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'base_com')
+    base_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'base')
+    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'left_hand')
+    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'right_hand')
 
     base_com_jacp = np.zeros((3, model.nv))
     base_com_jacr = np.zeros((3, model.nv))
@@ -259,13 +251,12 @@ def get_joint_state(sim, robot):
 
     joint_data['joint_pos'] = OrderedDict()
     joint_data['joint_vel'] = OrderedDict()
-    for pnc_key in key_map['joint'].keys():
-        mujoco_key = key_map['joint'][pnc_key]
-        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_key)
+    for joint in key_map['joint']:
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, joint)
         joint_qposadr = model.jnt_qposadr[joint_id]
         joint_qveladr = model.jnt_dofadr[joint_id]
-        joint_data['joint_pos'][pnc_key] = data.qpos[joint_qposadr]
-        joint_data['joint_vel'][pnc_key] = data.qvel[joint_qveladr]
+        joint_data['joint_pos'][joint] = data.qpos[joint_qposadr]
+        joint_data['joint_vel'][joint] = data.qvel[joint_qveladr]
 
     return joint_data
 
@@ -275,11 +266,11 @@ def get_trajectory(sim, robot):
     model, data = get_mujoco_objects(sim)
     trajectory_data = OrderedDict()
 
-    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'base_com')
-    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'left_hand')
-    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'right_hand')
-    lf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'left_foot')
-    rf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'right_foot')
+    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'base_com')
+    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'left_hand')
+    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'right_hand')
+    lf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'left_foot')
+    rf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'right_foot')
 
     base_com_pos = np.copy(data.xpos[base_com_id])
     base_com_quat = np.copy(data.xquat[base_com_id][[1,2,3,0]])
@@ -318,10 +309,10 @@ def get_global_trajectory(sim, robot):
     model, data = get_mujoco_objects(sim)
     trajectory_data = OrderedDict()
 
-    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'left_hand')
-    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'right_hand')
-    lf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'left_foot')
-    rf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'right_foot')
+    lh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'left_hand')
+    rh_eef_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'right_hand')
+    lf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'left_foot')
+    rf_foot_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'right_foot')
 
     lh_eef_pos = np.copy(data.xpos[lh_eef_id])
     rh_eef_pos = np.copy(data.xpos[rh_eef_id])
@@ -351,7 +342,7 @@ def transform_local_trajectory(sim, robot, global_trajectory):
     model, data = get_mujoco_objects(sim)
     trajectory_data = OrderedDict()
 
-    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix+'base_com')
+    base_com_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, 'base_com')
 
     base_com_pos = np.copy(data.xpos[base_com_id])
     base_com_quat = np.copy(data.xquat[base_com_id][[1,2,3,0]])

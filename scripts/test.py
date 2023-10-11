@@ -76,8 +76,8 @@ def main(gui, env_type, cam_name='upview', subtask=0, save_video=True):
 
         if env.cur_time > 24.0:
             done = True
-
-    recorder.close()
+    if recorder is not None:
+        recorder.close()
 
 if __name__ == "__main__":
     

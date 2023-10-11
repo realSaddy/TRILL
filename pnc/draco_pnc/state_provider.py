@@ -82,7 +82,7 @@ class DracoManipulationStateProvider(metaclass=MetaSingleton):
 
     @nominal_joint_pos.setter
     def nominal_joint_pos(self, val):
-        assert self._robot.n_a == len(val.keys())
+        assert self._robot.n_a == len(val)
         self._nominal_joint_pos = val
 
     @state.setter

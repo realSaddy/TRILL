@@ -48,15 +48,20 @@ class HumanoidModel(RobotModel):
         self._set_key_map()
 
 
+    # Override to prevent name prefix
+    def exclude_from_prefixing(slef, inp):
+        return True
+
     def _set_key_map(self):
         """
         Sets the key map for this robot
         """
-        joints = self.get_element_names(self.worldbody, "joint")
-        actuators = self.get_element_names(self.worldbody, "actuator")
-        print(joints)
-        print(actuators)
-        self._key_map = {'joint': joints, 'actuator': actuator}
+        joints = self.joints
+        actuators = self.actuators
+         
+        # Remove the base
+        joints.remove("root")
+        self._key_map = {'joint': joints, 'actuator': actuators}
 
 
     def add_gripper(self, gripper, arm_name=None):
