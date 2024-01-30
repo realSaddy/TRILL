@@ -19,9 +19,9 @@ class DartRobotSystem(RobotSystem):
     floating base.
     """
 
-    def __init__(self, urdf_file, b_fixed_base, b_print_info=False):
+    def __init__(self, description_file, b_fixed_base, b_print_info=False):
         super(DartRobotSystem, self).__init__(
-            urdf_file, None, b_fixed_base, b_print_info
+            description_file, None, b_fixed_base, b_print_info
         )
 
     def _config_robot(self, urdf_file, package_dir):

@@ -14,6 +14,21 @@ class DracoManipulationController(object):
         self._config = config
 
         # Initialize WBC
+        # (
+        #     l_jp_idx,
+        #     l_jd_idx,
+        #     r_jp_idx,
+        #     r_jd_idx,
+        #     neck_pitch_idx,
+        # ) = self._robot.get_q_dot_idx(
+        #     [
+        #         "l_knee_fe_jp",
+        #         "l_knee_fe_jd",
+        #         "r_knee_fe_jp",
+        #         "r_knee_fe_jd",
+        #         "neck_pitch",
+        #     ]
+        # )
         (
             l_jp_idx,
             l_jd_idx,
@@ -22,13 +37,14 @@ class DracoManipulationController(object):
             neck_pitch_idx,
         ) = self._robot.get_q_dot_idx(
             [
-                "l_knee_fe_jp",
-                "l_knee_fe_jd",
-                "r_knee_fe_jp",
-                "r_knee_fe_jd",
-                "neck_pitch",
+                "joint_right_N0",
+                "joint_right_N2",
+                "joint_right_N0",
+                "joint_right_N2",
+                "joint_head",
             ]
         )
+
         act_list = [False] * robot.n_floating + [True] * robot.n_a
         act_list[l_jp_idx] = False
         act_list[r_jp_idx] = False

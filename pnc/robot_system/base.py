@@ -5,7 +5,9 @@ import numpy as np
 
 
 class RobotSystem(abc.ABC):
-    def __init__(self, urdf_file, package_name, b_fixed_base, b_print_robot_info=False):
+    def __init__(
+        self, description_file, package_name, b_fixed_base, b_print_robot_info=False
+    ):
         """
         Base RobotSystem Class
 
@@ -32,7 +34,7 @@ class RobotSystem(abc.ABC):
         self._joint_id = OrderedDict()
         self._link_id = OrderedDict()
 
-        self._config_robot(urdf_file, package_name)
+        self._config_robot(description_file, package_name)
 
         if b_print_robot_info:
             print("=" * 80)

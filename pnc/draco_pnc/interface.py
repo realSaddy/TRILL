@@ -11,16 +11,20 @@ from pnc.draco_pnc.state_provider import DracoManipulationStateProvider
 from pnc.draco_pnc.state_estimator import DracoManipulationStateEstimator
 from pnc.draco_pnc.control_architecture import DracoManipulationControlArchitecture
 from pnc.data_saver import DataSaver
-from pnc.robot_system import PinocchioRobotSystem
+from pnc.robot_system import PinocchioRobotSystem, MujocoRobotSystem
 
 
 class DracoManipulationInterface(Interface):
     def __init__(self, path_to_model, config):
         super(DracoManipulationInterface, self).__init__()
 
-        self._robot = PinocchioRobotSystem(
-            path_to_model + "/draco3.urdf", path_to_model, False, False
+        self._robot = MujocoRobotSystem(
+            path_to_model + "/robot.xml", path_to_model, False, False
         )
+
+        # self._robot = PinocchioRobotSystem(
+        #     path_to_model + "/draco3.urdf", path_to_model, False, False
+        # )
 
         self._config = config
         self._sp = DracoManipulationStateProvider(self._robot)

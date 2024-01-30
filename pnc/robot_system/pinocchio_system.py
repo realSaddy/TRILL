@@ -53,6 +53,7 @@ class PinocchioRobotSystem(RobotSystem):
 
         self._n_q = self._model.nq
         self._n_q_dot = self._model.nv
+        print("NV: ", self._model.nv)
         self._n_a = self._n_q_dot - self._n_floating
 
         passing_idx = 0
