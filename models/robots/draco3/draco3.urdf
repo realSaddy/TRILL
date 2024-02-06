@@ -1,5 +1,11 @@
 <?xml version="1.0" ?>
 <robot name="draco_3" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <mujoco>
+        <compiler
+        meshdir="meshes/"
+        balanceinertia="true"
+        discardvisual="false" />
+  </mujoco>
 
   <material name = "dark_gray">
       <color rgba="0.3 0.3 0.3 1"/>

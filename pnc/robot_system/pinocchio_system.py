@@ -128,6 +128,8 @@ class PinocchioRobotSystem(RobotSystem):
 
         return command
 
+    count = 0
+
     def update_system(
         self,
         base_com_pos,
@@ -186,6 +188,11 @@ class PinocchioRobotSystem(RobotSystem):
 
         if b_cent:
             self._update_centroidal_quantities()
+
+        if self.count > 5:
+            print(self.get_com_lin_vel())
+            sys.exit(0)
+        self.count += 1
 
     def _update_centroidal_quantities(self):
         pin.ccrba(self._model, self._data, self._q, self._q_dot)

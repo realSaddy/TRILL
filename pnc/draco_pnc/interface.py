@@ -19,7 +19,7 @@ class DracoManipulationInterface(Interface):
         super(DracoManipulationInterface, self).__init__()
 
         self._robot = MujocoRobotSystem(
-            path_to_model + "/robot.xml", path_to_model, False, False
+            path_to_model + "/draco3.xml", path_to_model, False, False
         )
 
         # self._robot = PinocchioRobotSystem(

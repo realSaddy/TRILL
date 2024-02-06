@@ -7,7 +7,7 @@ from .mobile import HumanoidModel
 cwd = os.getcwd()
 
 PATH_TO_ROBOT_MODEL = os.path.expanduser(cwd + "/models/robots/draco3")
-PATH_TO_ROBOT_XML = os.path.join(PATH_TO_ROBOT_MODEL, "robot.xml")
+PATH_TO_ROBOT_XML = os.path.join(PATH_TO_ROBOT_MODEL, "draco3.xml")
 
 DRACO3_MAP = {
     "joint": {

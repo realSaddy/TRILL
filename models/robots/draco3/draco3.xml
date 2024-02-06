@@ -18,8 +18,8 @@
         <motor ctrllimited="true" ctrlrange="-244 244" joint="r_hip_ie" name="torque_right_leg_0"/>
         <motor ctrllimited="true" ctrlrange="-256 256" joint="r_hip_aa" name="torque_right_leg_1"/>
         <motor ctrllimited="true" ctrlrange="-259.6 259.6" joint="r_hip_fe" name="torque_right_leg_2"/>
-        <motor ctrllimited="true" ctrlrange="-240.85 240.85" joint="r_knee_fe_lp" name="torque_right_leg_3"/>
-        <motor ctrllimited="true" ctrlrange="-240.85 240.85" joint="r_knee_fe_ld" name="torque_right_leg_4"/>
+        <motor ctrllimited="true" ctrlrange="-240.85 240.85" joint="r_knee_fe_jp" name="torque_right_leg_3"/>
+        <motor ctrllimited="true" ctrlrange="-240.85 240.85" joint="r_knee_fe_jd" name="torque_right_leg_4"/>
         <motor ctrllimited="true" ctrlrange="-244 244" joint="r_ankle_fe" name="torque_right_leg_5"/>
         <motor ctrllimited="true" ctrlrange="-230 230" joint="r_ankle_ie" name="torque_right_leg_6"/>
 
@@ -72,7 +72,7 @@
         <mesh name="mesh_r_hip_fe_link_viz" file="meshes/r_hip_fe_link.stl" />
         <mesh name="mesh_right_N0_viz" file="meshes/r_knee_fe_lp.stl" />
         <mesh name="mesh_r_knee_adj_link_viz" file="meshes/r_knee_adj_link.stl" />
-        <mesh name="mesh_r_knee_fe_ld_viz" file="meshes/r_knee_fe_ld.stl" />
+        <mesh name="mesh_r_knee_fe_jd_viz" file="meshes/r_knee_fe_ld.stl" />
         <mesh name="mesh_r_ankle_fe_link_viz" file="meshes/r_ankle_fe_link.stl" />
         <!-- <mesh name="mesh_r_ankle_ie_link_viz" file="meshes/r_ankle_ie_link_big_foot.stl" /> -->
         <mesh name="mesh_r_ankle_ie_link_viz" file="meshes/r_ankle_ie_link.stl" />
@@ -263,16 +263,16 @@
                     />
                 <joint limited="true" damping="0" armature="0.01" name="r_hip_fe" type="hinge" pos="0 0 0" axis="0 1 0" range="-1.52716 0.523599"/>
 
-            <body name="r_knee_fe_lp" pos="0 0 -0.324231" quat="1 0 0 0">
+            <body name="r_knee_fe_jp" pos="0 0 -0.324231" quat="1 0 0 0">
                 <inertial pos="4.28378e-09 -0.000374047 -0.0259832" mass="0.152083" fullinertia="0.00048051 0.000329965 0.000282787 4.75046e-11 -3.71034e-11 2.06816e-05"/>
                 <!-- <inertial pos="4.28378e-09 -0.000374047 -0.0259832" mass="0.152083" fullinertia="0.001 0.000343441 0.000321184 4.75046e-11 -3.71034e-11 2.06816e-05"/> -->
-                <geom name="geom_r_knee_fe_lp_viz"
+                <geom name="geom_r_knee_fe_jp_viz"
                     type="mesh" margin="0.001" mesh="mesh_l_knee_fe_jp_viz"
                     contype="0" conaffinity="0"  group="1"
                     pos="0.005 0.1 0.47" quat="0 0 0 1"
                     material="black"
                     />
-                <joint limited="true" damping="0" armature="0.01" name="r_knee_fe_lp" type="hinge" pos="0 0 0" axis="0 1 0" range="-0.0872665 1.52716"/>
+                <joint limited="true" damping="0" armature="0.01" name="r_knee_fe_jp" type="hinge" pos="0 0 0" axis="0 1 0" range="-0.0872665 1.52716"/>
 
                 <body name="r_knee_adj_link" pos="0 0 -0.0557693" quat="1 0 0 0">
                     <inertial pos="0 -0.006 -0.0323676" mass="0.090042" diaginertia="0.000230283 7.20839e-05 0.000195694"/>
@@ -284,15 +284,15 @@
                         />
                 </body>
 
-            <body name="r_knee_fe_ld" pos="0 0 -0.1115386" quat="1 0 0 0">
+            <body name="r_knee_fe_jd" pos="0 0 -0.1115386" quat="1 0 0 0">
                 <inertial pos="0.00392246 0.00238405 -0.07941" mass="2.55664" fullinertia="0.011 0.013 0.005 -0.000259001 0.000169 -0.001"/>
-                <geom name="geom_r_knee_fe_ld_viz"
-                    type="mesh" margin="0.001" mesh="mesh_r_knee_fe_ld_viz"
+                <geom name="geom_r_knee_fe_jd_viz"
+                    type="mesh" margin="0.001" mesh="mesh_r_knee_fe_jd_viz"
                     contype="0" conaffinity="0" group="1"
                     pos="0 0.1 0.59" quat="1 0 0 0"
                     material="black"
                     />
-                <joint limited="true" damping="0" armature="0.01" name="r_knee_fe_ld" type="hinge" pos="0 0 0" axis="0 1 0" range="-0.0872665 1.52716"/>
+                <joint limited="true" damping="0" armature="0.01" name="r_knee_fe_jd" type="hinge" pos="0 0 0" axis="0 1 0" range="-0.0872665 1.52716"/>
 
             <body name="r_ankle_fe_link" pos="0 -0.00599 -0.248231" quat="1 0 0 0">
                 <inertial pos="2.67715e-05 0.0277455 -0.000699218" mass="0.183143" fullinertia="8.90758e-05 5.81098e-05 0.000101604 -2.90654e-07 -2.26413e-06 -1.95082e-07"/>
@@ -457,7 +457,7 @@
     </worldbody>
 
     <equality>
-        <joint joint1="r_knee_fe_lp" joint2="r_knee_fe_ld" polycoef="0 1 0 0 0"/>
+        <joint joint1="r_knee_fe_jp" joint2="r_knee_fe_jd" polycoef="0 1 0 0 0"/>
         <joint joint1="l_knee_fe_jp" joint2="l_knee_fe_jd" polycoef="0 1 0 0 0"/>
 	</equality>
 
