@@ -93,12 +93,16 @@ def rot_to_euler(rot):
 def quat_to_exp(quat):
     img_vec = np.array([quat[0], quat[1], quat[2]])
     w = quat[3]
-    theta = 2.0 * np.arcsin(
-        np.sqrt(
-            img_vec[0] * img_vec[0] + img_vec[1] * img_vec[1] + img_vec[2] * img_vec[2]
+    try:
+        theta = 2.0 * np.arcsin(
+            np.sqrt(
+                img_vec[0] * img_vec[0]
+                + img_vec[1] * img_vec[1]
+                + img_vec[2] * img_vec[2]
+            )
         )
-    )
-
+    except:
+        breakpoint()
     if np.abs(theta) < 1e-4:
         return np.zeros(3)
     ret = img_vec / np.sin(theta / 2.0)

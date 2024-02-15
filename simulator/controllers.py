@@ -314,7 +314,8 @@ class DracoController(object):
 
     def get_control(self):
         command = self._interface.get_command(copy.deepcopy(self._sensor_data))
-        print(command["joint_pos"].items())
+
+        # print(command)
         del command["joint_pos"]["l_knee_fe_jp"]
         del command["joint_pos"]["r_knee_fe_jp"]
         del command["joint_vel"]["l_knee_fe_jp"]

@@ -11,6 +11,7 @@ import numpy as np
 
 from .base import RobotSystem
 from util import geom
+import time
 
 
 class MujocoRobotSystem(RobotSystem):
@@ -30,8 +31,16 @@ class MujocoRobotSystem(RobotSystem):
         self._joint_pos_limit = np.stack(
             [lower_jnt_pos_limit[1:], upper_jnt_pos_limit[1:]], axis=1
         )
-        self._joint_vel_limit = np.ones_like(self._joint_pos_limit) * 100
-        self._joint_trq_limit = self._model.actuator_forcerange
+
+        self._joint_vel_limit = np.stack(
+            [
+                np.ones_like(self._joint_pos_limit[:, 0]) * -100,
+                np.ones_like(self._joint_pos_limit[:, 1]) * 100,
+            ],
+            axis=1,
+        )
+        self._joint_trq_limit = self._model.actuator_ctrlrange
+        # breakpoint()
 
     def get_joint_idx(self, joint_name):
         if type(joint_name) is list:
@@ -84,6 +93,7 @@ class MujocoRobotSystem(RobotSystem):
             command["joint_vel"][name] = joint_vel_cmd[pos]
             command["joint_trq"][name] = joint_trq_cmd[pos]
 
+        # breakpoint()
         return command
 
     count = 0
@@ -149,10 +159,12 @@ class MujocoRobotSystem(RobotSystem):
         if b_cent:
             self._update_centroidal_quantities()
 
-        if self.count > 1:
-            print(self.get_com_lin_vel())
-            sys.exit(0)
-        self.count += 1
+        # if self.count == 3:
+        #     time.sleep(3)
+        # # if self.count > 10:
+        # #     print(self.get_com_lin_vel())
+        # #     sys.exit(0)
+        # self.count += 1
 
     def _update_centroidal_quantities(self):
         pin.ccrba(self._model, self._data, self._q, self._q_dot)

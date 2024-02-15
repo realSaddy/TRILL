@@ -94,8 +94,10 @@ def set_motor_trq(sim, robot, command):
         actuator_id = mujoco.mj_name2id(
             model, mujoco.mjtObj.mjOBJ_ACTUATOR, mujoco_actuator_key
         )
-        # print(actuator_id)
         trq_applied[actuator_id] = trq_des
+
+    # breakpoint()
+    print("TRQ applied: ", trq_applied)
     data.ctrl[list(trq_applied.keys())] = list(trq_applied.values())
 
 
@@ -138,8 +140,18 @@ def set_motor_pos_vel(sim, robot, state):
         joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, mujoco_joint_key)
         joint_qposadr = model.jnt_qposadr[joint_id]
         joint_qveladr = model.jnt_dofadr[joint_id]
+        # breakpoint()
+
         pos_applied[joint_qposadr] = pos_des
         vel_applied[joint_qveladr] = vel_des
+    # print(
+    #     [
+    #         str(model.jnt_qposadr[i])
+    #         + " : "
+    #         + str(mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, i))
+    #         for i in range(model.njnt)
+    #     ]
+    # )
     data.qpos[list(pos_applied.keys())] = list(pos_applied.values())
     data.qvel[list(vel_applied.keys())] = list(vel_applied.values())
 

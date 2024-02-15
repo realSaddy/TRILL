@@ -120,7 +120,7 @@ class BaseEnv:
             self._record(time_stamp=self._cur_sim_time)
 
             if self._cur_sim_time - self._cur_render_time >= RENDER_TIME:
-                # self._render()
+                self._render()
                 self._cur_render_time += RENDER_TIME
 
             self._cur_sim_time += SIM_TIME

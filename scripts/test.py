@@ -23,10 +23,10 @@ ENV_LOOKUP = {
 
 
 def main(gui, env_type, cam_name="upview", subtask=0, save_video=False):
-    if env_type in ENV_LOOKUP.keys():
-        env_class = ENV_LOOKUP[env_type]
-    else:
-        env_class = EmptyEnv
+    # if env_type in ENV_LOOKUP.keys():
+    #     env_class = ENV_LOOKUP[env_type]
+    # else:
+    env_class = DoorEnv
 
     env = env_class()
 
@@ -62,6 +62,7 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=False):
     target_pos = np.array([0.22, -0.35, -0.1])
 
     while not done:
+        env.render()
         action = {}
         action["trajectory"] = {}
         action["gripper"] = {}
@@ -144,4 +145,6 @@ if __name__ == "__main__":
     cam_name = args.cam
     subtask = args.subtask
 
-    main(gui=gui, env_type=env_type, cam_name=cam_name, subtask=subtask)
+    main(
+        gui=gui, env_type=env_type, cam_name=cam_name, subtask=subtask, save_video=True
+    )

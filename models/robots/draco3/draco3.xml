@@ -1,5 +1,5 @@
 <mujoco model="draco3">
-
+    <compiler angle="radian" eulerseq="XYZ"/>
     <actuator>
         <motor ctrllimited="true" ctrlrange="-18 18" joint="r_shoulder_fe" name="torque_right_arm_0"/>
         <motor ctrllimited="true" ctrlrange="-18 18" joint="r_shoulder_aa" name="torque_right_arm_1"/>
@@ -80,7 +80,7 @@
 
 
     <worldbody>
-        <body name="torso_link" pos="0 0 0">
+        <body gravcomp="1" name="torso_link" pos="0 0 0">
             <inertial pos="-0.0310745 -0.000497416 0.137484" mass="6.41443" fullinertia="0.171435 0.175671 0.036373 6.32882e-05 0.0271615 0.000581149"/>
             <geom name="geom_base_viz"
                 type="mesh" margin="0.001" mesh="mesh_base_viz"
