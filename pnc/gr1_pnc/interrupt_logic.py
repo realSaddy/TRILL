@@ -1,14 +1,14 @@
 import numpy as np
 
-from pnc.draco_pnc.state_machine import LocomanipulationState
+from pnc.gr1_pnc.state_machine import LocomanipulationState
 from pnc.interrupt_logic import InterruptLogic
 
 COM_VEL_THRE = 0.01
 
 
-class DracoManipulationInterruptLogic(InterruptLogic):
+class GR1ManipulationInterruptLogic(InterruptLogic):
     def __init__(self, ctrl_arch):
-        super(DracoManipulationInterruptLogic, self).__init__()
+        super(GR1ManipulationInterruptLogic, self).__init__()
         self._control_architecture = ctrl_arch
 
         self._lh_target_pos = np.array([0.0, 0.0, 0.0])

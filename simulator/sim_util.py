@@ -151,6 +151,7 @@ def set_body_pos_vel(sim, robot, state):
     )
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
+
     data.qpos[joint_qposadr : joint_qposadr + 7] = np.concatenate(
         (state["body_pos"]["pos"], state["body_pos"]["quat"][[3, 0, 1, 2]])
     )

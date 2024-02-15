@@ -3,15 +3,15 @@ import numpy as np
 from pnc.control_architecture import ControlArchitecture
 from pnc.dcm import *
 from pnc.wbc.manager import *
-from .controller import DracoManipulationController
+from .controller import GR1ManipulationController
 from .state_machine import *
-from .state_provider import DracoManipulationStateProvider
-from .tci_container import DracoManipulationTCIContainer
+from .state_provider import GR1ManipulationStateProvider
+from .tci_container import GR1ManipulationTCIContainer
 
 
-class DracoManipulationControlArchitecture(ControlArchitecture):
+class GR1ManipulationControlArchitecture(ControlArchitecture):
     def __init__(self, robot, config):
-        super(DracoManipulationControlArchitecture, self).__init__(robot)
+        super(GR1ManipulationControlArchitecture, self).__init__(robot)
 
         self._robot = robot
         self._config = config
@@ -22,12 +22,12 @@ class DracoManipulationControlArchitecture(ControlArchitecture):
         # ======================================================================
         # Initialize TCIContainer
         # ======================================================================
-        self._tci_container = DracoManipulationTCIContainer(self._robot, self._config)
+        self._tci_container = GR1ManipulationTCIContainer(self._robot, self._config)
 
         # ======================================================================
         # Initialize Controller
         # ======================================================================
-        self._draco_manipulation_controller = DracoManipulationController(
+        self._gr1_manipulation_controller = GR1ManipulationController(
             self._tci_container, self._robot, self._config
         )
 
@@ -84,8 +84,8 @@ class DracoManipulationControlArchitecture(ControlArchitecture):
             self._tci_container.com_task,
             self._tci_container.torso_ori_task,
             self._robot,
-            "l_foot_contact",
-            "r_foot_contact",
+            "l_foot_lower_right_link",
+            "r_foot_lower_right_link",
         )
         self._dcm_tm.nominal_com_height = walking_config["Initial Motion"]["COM Height"]
         self._dcm_tm.t_additional_init_transfer = walking_config["Duration"][
@@ -315,7 +315,7 @@ class DracoManipulationControlArchitecture(ControlArchitecture):
         self._b_state_first_visit = True
         self._b_manipulation_first_visit = True
 
-        self._sp = DracoManipulationStateProvider(robot)
+        self._sp = GR1ManipulationStateProvider(robot)
 
     def get_command(self):
         if self._b_state_first_visit:
@@ -336,7 +336,7 @@ class DracoManipulationControlArchitecture(ControlArchitecture):
         self._upper_body_tm.use_nominal_upper_body_joint_pos(self._sp.nominal_joint_pos)
 
         # Get Whole Body Control Commands
-        command = self._draco_manipulation_controller.get_command()
+        command = self._gr1_manipulation_controller.get_command()
 
         if self._state_machine[self._state].end_of_state():
             self._state_machine[self._state].last_visit()

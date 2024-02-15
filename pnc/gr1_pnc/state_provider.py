@@ -12,7 +12,7 @@ class MetaSingleton(type):
         return cls._instances[cls]
 
 
-class DracoManipulationStateProvider(metaclass=MetaSingleton):
+class GR1ManipulationStateProvider(metaclass=MetaSingleton):
     def __init__(self, robot):
         self._robot = robot
         self._nominal_joint_pos = OrderedDict()

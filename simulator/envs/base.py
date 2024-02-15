@@ -8,15 +8,15 @@ import yaml
 cwd = os.getcwd()
 sys.path.append(cwd)
 
-from simulator.robots import Draco3
+from simulator.robots import GR1
 from simulator.grippers import SakeEZGripper
-from simulator.controllers import DracoController
+from simulator.controllers import GR1Controller
 import simulator.sim_util as sim_util
 
 from robosuite.models.base import MujocoXML
 from robosuite.utils.binding_utils import MjSim
 
-PATH_TO_ROBOT_MODEL = os.path.expanduser(cwd + "/models/robots/draco3")
+PATH_TO_ROBOT_MODEL = os.path.expanduser(cwd + "/models/robots/gr1")
 PATH_TO_WORLD_XML = os.path.expanduser(cwd + "/models/base.xml")
 
 SIM_TIME = 0.002
@@ -99,7 +99,7 @@ class BaseEnv:
             self._cur_action["locomotion"] = action["locomotion"]
             self._cur_action["trajectory"].update(action["trajectory"])
             self._cur_action["gripper"].update(action["gripper"])
-            self._cur_action["aux"].update(action["aux"])
+            # self._cur_action["aux"].update(action["aux"])
 
         prv_obs = self._get_obs()
         cur_cmd = self._get_cmd()
@@ -112,7 +112,7 @@ class BaseEnv:
 
         self.controller.update_trajectory(cur_cmd["trajectory"], cur_cmd["locomotion"])
         self.controller.update_gripper_target(cur_cmd["gripper"])
-        self.controller.update_aux_target(cur_cmd["aux"])
+        # self.controller.update_aux_target(cur_cmd["aux"])
 
         while self._cur_sim_time - self._cur_teleop_time < TELEOP_TIME:
             self._apply_control()
@@ -176,16 +176,16 @@ class BaseEnv:
             key: self.action_map["gripper"][key][int(value)]
             for key, value in self._cur_action["gripper"].items()
         }
-        cur_cmd["aux"] = {
-            key: self.action_map["aux"][key][int(value)]
-            for key, value in self._cur_action["aux"].items()
-        }
+        # cur_cmd["aux"] = {
+        #     key: self.action_map["aux"][key][int(value)]
+        #     for key, value in self._cur_action["aux"].items()
+        # }
 
         return cur_cmd
 
     def _load_model(self):
         self.world = MujocoXML(PATH_TO_WORLD_XML)
-        self.robot = Draco3()
+        self.robot = GR1()
         self.grippers = {}
         for key in ["right", "left"]:
             self.grippers[key] = SakeEZGripper(idn=key)
@@ -193,10 +193,17 @@ class BaseEnv:
                 self.grippers[key],
                 arm_name=self.robot.naming_prefix + self.robot._eef_name[key],
             )
+        with open("robot_output.xml", "w") as f:
+            f.write(self.robot.get_xml())
+        with open("world_before.xml", "w") as f:
+            f.write(self.world.get_xml())
+
         self.world.merge(self.robot)
+        with open("world_after.xml", "w") as f:
+            f.write(self.world.get_xml())
 
     def _reset_robot(self, initial_pos=None):
-        self.controller = DracoController(self.config, PATH_TO_ROBOT_MODEL)
+        self.controller = GR1Controller(self.config, PATH_TO_ROBOT_MODEL)
         self.controller.reset(initial_pos=initial_pos)
         sim_util.set_body_pos_vel(self.sim, self.robot, self.controller._robot_target)
         sim_util.set_motor_pos_vel(self.sim, self.robot, self.controller._robot_target)
@@ -248,9 +255,9 @@ class BaseEnv:
         self.controller.standby()
         sensor_data = sim_util.get_sensor_data(self.sim, self.robot)
         self.controller.update_sensor_data(sensor_data)
-        sim_util.set_motor_impedance(
-            self.sim, self.robot, self.controller._robot_target, 500.0, 10
-        )
+        # sim_util.set_motor_impedance(
+        #     self.sim, self.robot, self.controller._robot_target, 500.0, 10
+        # )
 
     def _apply_control(self):
         if self._cur_sim_time - self._cur_wbc_time >= WBC_TIME:
@@ -271,9 +278,9 @@ class BaseEnv:
 
             self._cur_wbc_time += WBC_TIME
 
-        aux_control = self.controller.get_aux_control()
-        aux_gain = self.controller.aux_config["Gain"]
-        sim_util.set_motor_impedance(self.sim, self.robot, aux_control, **aux_gain)
+        # aux_control = self.controller.get_aux_control()
+        # aux_gain = self.controller.aux_config["Gain"]
+        # sim_util.set_motor_impedance(self.sim, self.robot, aux_control, **aux_gain)
 
         gripper_control = self.controller.get_gripper_control()
         gripper_gain = self.controller.gripper_config["Gain"]

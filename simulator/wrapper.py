@@ -16,33 +16,35 @@ OBS_EEF_KEYS = [
 ]
 
 OBS_JOINT_KEYS = [
-    "r_hip_ie",
-    "r_hip_aa",
-    "r_hip_fe",
-    "r_knee_fe_jp",
-    "r_knee_fe_jd",
-    "r_ankle_fe",
-    "r_ankle_ie",
-    "l_hip_ie",
-    "l_hip_aa",
-    "l_hip_fe",
-    "l_knee_fe_jp",
-    "l_knee_fe_jd",
-    "l_ankle_fe",
-    "l_ankle_ie",
-    "r_shoulder_fe",
-    "r_shoulder_aa",
-    "r_shoulder_ie",
-    "r_elbow_fe",
-    "r_wrist_ps",
-    "r_wrist_pitch",
-    "l_shoulder_fe",
-    "l_shoulder_aa",
-    "l_shoulder_ie",
-    "l_elbow_fe",
-    "l_wrist_ps",
+    "l_hip_roll",
+    "l_hip_yaw",
+    "l_hip_pitch",
+    "l_knee_pitch",
+    "l_ankle_pitch",
+    "l_ankle_roll",
+    "r_hip_roll",
+    "r_hip_yaw",
+    "r_hip_pitch",
+    "r_knee_pitch",
+    "r_ankle_pitch",
+    "r_ankle_roll",
+    "waist_yaw",
+    "waist_pitch",
+    "waist_roll",
+    "l_shoulder_pitch",
+    "l_shoulder_roll",
+    "l_shoulder_yaw",
+    "l_elbow_pitch",
+    "l_wrist_yaw",
+    "l_wrist_roll",
     "l_wrist_pitch",
-    "neck_pitch",
+    "r_shoulder_pitch",
+    "r_shoulder_roll",
+    "r_shoulder_yaw",
+    "r_elbow_pitch",
+    "r_wrist_yaw",
+    "r_wrist_roll",
+    "r_wrist_pitch",
 ]
 
 
@@ -170,14 +172,14 @@ class EnvWrapper(gym.Env):
         self._cur_action["trajectory"]["right_pos"] += act_right_pos
         self._cur_action["trajectory"]["left_pos"] += act_left_pos
 
-        act_trajecory_right_rot = (
-            R.from_quat(self._cur_action["trajectory"]["right_quat"]).as_matrix()
-            @ R.from_quat(act_right_quat).as_matrix()
-        )
-        act_trajecory_left_rot = (
-            R.from_quat(self._cur_action["trajectory"]["left_quat"]).as_matrix()
-            @ R.from_quat(act_left_quat).as_matrix()
-        )
+        # act_trajecory_right_rot = (
+        #     R.from_quat(self._cur_action["trajectory"]["right_quat"]).as_matrix()
+        #     @ R.from_quat(act_right_quat).as_matrix()
+        # )
+        # act_trajecory_left_rot = (
+        #     R.from_quat(self._cur_action["trajectory"]["left_quat"]).as_matrix()
+        #     @ R.from_quat(act_left_quat).as_matrix()
+        # )
 
         # act_trajecory_right_rot = R.from_quat(self._cur_action['trajectory']['right_quat']).as_matrix() @ R.from_euler('xyz', act_right_euler).as_matrix()
         # act_trajecory_left_rot = R.from_quat(self._cur_action['trajectory']['left_quat']).as_matrix() @ R.from_euler('xyz', act_left_euler).as_matrix()

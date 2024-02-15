@@ -72,6 +72,7 @@ class Task(abc.ABC):
 
     @kp.setter
     def kp(self, value):
+        # print(value.shape[0], self._dim)
         assert value.shape[0] == self._dim
         self._kp = value
 

@@ -1,8 +1,8 @@
 from scipy.spatial.transform import Rotation as R
 
 from pnc.dcm import Footstep
-from pnc.draco_pnc.state_machine import LocomanipulationState
-from pnc.draco_pnc.state_provider import DracoManipulationStateProvider
+from pnc.gr1_pnc.state_machine import LocomanipulationState
+from pnc.gr1_pnc.state_provider import GR1ManipulationStateProvider
 from pnc.state_machine import StateMachine
 from pnc.wbc.manager.dcm_trajectory_manager import DCMTransferType
 
@@ -14,7 +14,7 @@ class ContactTransitionStart(StateMachine):
         self._hierarchy_managers = hm
         self._force_managers = fm
         self._leg_side = leg_side
-        self._sp = DracoManipulationStateProvider(robot)
+        self._sp = GR1ManipulationStateProvider(robot)
         self._start_time = 0.0
         self._planning_id = 0
 

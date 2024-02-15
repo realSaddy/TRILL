@@ -6,29 +6,29 @@ sys.path.append(cwd)
 import copy
 
 from pnc.interface import Interface
-from pnc.draco_pnc.interrupt_logic import DracoManipulationInterruptLogic
-from pnc.draco_pnc.state_provider import DracoManipulationStateProvider
-from pnc.draco_pnc.state_estimator import DracoManipulationStateEstimator
-from pnc.draco_pnc.control_architecture import DracoManipulationControlArchitecture
+from pnc.gr1_pnc.interrupt_logic import GR1ManipulationInterruptLogic
+from pnc.gr1_pnc.state_provider import GR1ManipulationStateProvider
+from pnc.gr1_pnc.state_estimator import GR1ManipulationStateEstimator
+from pnc.gr1_pnc.control_architecture import GR1ManipulationControlArchitecture
 from pnc.data_saver import DataSaver
 from pnc.robot_system import PinocchioRobotSystem
 
 
-class DracoManipulationInterface(Interface):
+class GR1ManipulationInterface(Interface):
     def __init__(self, path_to_model, config):
-        super(DracoManipulationInterface, self).__init__()
+        super(GR1ManipulationInterface, self).__init__()
 
         self._robot = PinocchioRobotSystem(
-            path_to_model + "/draco3.urdf", path_to_model, False, False
+            path_to_model + "/GR1T1.urdf", path_to_model, False, False
         )
 
         self._config = config
-        self._sp = DracoManipulationStateProvider(self._robot)
-        self._se = DracoManipulationStateEstimator(self._robot, self._config)
-        self._control_architecture = DracoManipulationControlArchitecture(
+        self._sp = GR1ManipulationStateProvider(self._robot)
+        self._se = GR1ManipulationStateEstimator(self._robot, self._config)
+        self._control_architecture = GR1ManipulationControlArchitecture(
             self._robot, self._config
         )
-        self._interrupt_logic = DracoManipulationInterruptLogic(
+        self._interrupt_logic = GR1ManipulationInterruptLogic(
             self._control_architecture
         )
         if self._config["Simulation"]["Save Data"]:

@@ -7,32 +7,32 @@ from pnc.wbc.ihwbc.ihwbc import IHWBC
 from pnc.wbc.ihwbc.joint_integrator import JointIntegrator
 
 
-class DracoManipulationController(object):
+class GR1ManipulationController(object):
     def __init__(self, tci_container, robot, config):
         self._tci_container = tci_container
         self._robot = robot
         self._config = config
 
         # Initialize WBC
-        (
-            l_jp_idx,
-            l_jd_idx,
-            r_jp_idx,
-            r_jd_idx,
-            neck_pitch_idx,
-        ) = self._robot.get_q_dot_idx(
-            [
-                "l_knee_fe_jp",
-                "l_knee_fe_jd",
-                "r_knee_fe_jp",
-                "r_knee_fe_jd",
-                "neck_pitch",
-            ]
-        )
+        # (
+        #     l_jp_idx,
+        #     l_jd_idx,
+        #     r_jp_idx,
+        #     r_jd_idx,
+        #     neck_pitch_idx,
+        # ) = self._robot.get_q_dot_idx(
+        #     [
+        #         "l_knee_fe_jp",
+        #         "l_knee_fe_jd",
+        #         "r_knee_fe_jp",
+        #         "r_knee_fe_jd",
+        #         "neck_pitch",
+        #     ]
+        # )
         act_list = [False] * robot.n_floating + [True] * robot.n_a
-        act_list[l_jp_idx] = False
-        act_list[r_jp_idx] = False
-        act_list[neck_pitch_idx] = False
+        # act_list[l_jp_idx] = False
+        # act_list[r_jp_idx] = False
+        # act_list[neck_pitch_idx] = False
 
         n_q_dot = len(act_list)
         n_active = np.count_nonzero(np.array(act_list))
@@ -52,8 +52,8 @@ class DracoManipulationController(object):
                     self._sv[k, i] = 1.0
                     k += 1
 
-        self._sd[0, l_jd_idx] = 1.0
-        self._sd[1, r_jd_idx] = 1.0
+        # self._sd[0, l_jd_idx] = 1.0
+        # self._sd[1, r_jd_idx] = 1.0
 
         self._sf = np.zeros((6, n_q_dot))
         self._sf[0:6, 0:6] = np.eye(6)

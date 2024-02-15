@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 import numpy as np
 
-from pnc.draco_pnc.interface import DracoManipulationInterface
+from pnc.gr1_pnc.interface import GR1ManipulationInterface
 from util import geom
 
 
@@ -126,10 +126,10 @@ class WheeledArmController(object):
         pass
 
 
-class DracoController(object):
+class GR1Controller(object):
     def __init__(self, config, path_to_robot_model) -> None:
         # Construct Interface
-        self._interface = DracoManipulationInterface(path_to_robot_model, config)
+        self._interface = GR1ManipulationInterface(path_to_robot_model, config)
         self._robot_target = {
             "joint_pos": OrderedDict(),
             "joint_vel": OrderedDict(),
@@ -192,13 +192,13 @@ class DracoController(object):
             )
         self._robot_target["body_vel"].update({"pos": np.zeros(3), "rpy": np.zeros(3)})
 
-        self._aux_target["joint_pos"].update(self._init_state["Aux Pos"])
-        self._aux_target["joint_vel"].update(
-            {key: 0.0 for key in self._aux_target["joint_pos"].keys()}
-        )
-        self._aux_target["joint_trq"].update(
-            {key: 0.0 for key in self._aux_target["joint_pos"].keys()}
-        )
+        # self._aux_target["joint_pos"].update(self._init_state["Aux Pos"])
+        # self._aux_target["joint_vel"].update(
+        #     {key: 0.0 for key in self._aux_target["joint_pos"].keys()}
+        # )
+        # self._aux_target["joint_trq"].update(
+        #     {key: 0.0 for key in self._aux_target["joint_pos"].keys()}
+        # )
 
         self._right_gripper_target["joint_pos"].update({"gripper": 0.0})
         self._right_gripper_target["joint_vel"].update(
@@ -315,12 +315,12 @@ class DracoController(object):
     def get_control(self):
         command = self._interface.get_command(copy.deepcopy(self._sensor_data))
 
-        del command["joint_pos"]["l_knee_fe_jp"]
-        del command["joint_pos"]["r_knee_fe_jp"]
-        del command["joint_vel"]["l_knee_fe_jp"]
-        del command["joint_vel"]["r_knee_fe_jp"]
-        del command["joint_trq"]["l_knee_fe_jp"]
-        del command["joint_trq"]["r_knee_fe_jp"]
+        # del command["joint_pos"]["l_knee_fe_jp"]
+        # del command["joint_pos"]["r_knee_fe_jp"]
+        # del command["joint_vel"]["l_knee_fe_jp"]
+        # del command["joint_vel"]["r_knee_fe_jp"]
+        # del command["joint_trq"]["l_knee_fe_jp"]
+        # del command["joint_trq"]["r_knee_fe_jp"]
 
         return command
 

@@ -2,8 +2,8 @@ import numpy as np
 from scipy.spatial.transform import Rotation as R
 from scipy.spatial.transform import Slerp
 
-from pnc.draco_pnc.state_machine import LocomanipulationState
-from pnc.draco_pnc.state_provider import DracoManipulationStateProvider
+from pnc.gr1_pnc.state_machine import LocomanipulationState
+from pnc.gr1_pnc.state_provider import GR1ManipulationStateProvider
 from pnc.state_machine import StateMachine
 
 
@@ -17,7 +17,7 @@ class DoubleSupportStand(StateMachine):
         self._rf_z_max_time = 0.0
         self._com_height_des = 0.0
         self._start_time = 0.0
-        self._sp = DracoManipulationStateProvider(robot)
+        self._sp = GR1ManipulationStateProvider(robot)
         self._lhand_iso = np.zeros((4, 4))
         self._rhand_iso = np.zeros((4, 4))
 
@@ -50,8 +50,8 @@ class DoubleSupportStand(StateMachine):
         self._start_time = self._sp.curr_time
 
         # Initialize CoM Trajectory
-        lfoot_iso = self._robot.get_link_iso("l_foot_contact")
-        rfoot_iso = self._robot.get_link_iso("r_foot_contact")
+        lfoot_iso = self._robot.get_link_iso("l_foot_lower_right_link")
+        rfoot_iso = self._robot.get_link_iso("r_foot_lower_right_link")
         com_pos_des = (lfoot_iso[0:3, 3] + rfoot_iso[0:3, 3]) / 2.0
         com_pos_des[2] = self._com_height_des
         base_quat_slerp = Slerp(

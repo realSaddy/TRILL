@@ -1,16 +1,16 @@
 import numpy as np
 
-from pnc.draco_pnc.rolling_joint_constraint import (
-    DracoManipulationRollingJointConstraint,
-)
+# from pnc.gr1_pnc.rolling_joint_constraint import (
+#     GR1ManipulationRollingJointConstraint,
+# )
 from pnc.wbc.basic_contact import SurfaceContact
 from pnc.wbc.basic_task import BasicTask
 from pnc.wbc.tci_container import TCIContainer
 
 
-class DracoManipulationTCIContainer(TCIContainer):
+class GR1ManipulationTCIContainer(TCIContainer):
     def __init__(self, robot, config):
-        super(DracoManipulationTCIContainer, self).__init__(robot)
+        super(GR1ManipulationTCIContainer, self).__init__(robot)
 
         self._robot = robot
         self._config = config
@@ -34,18 +34,19 @@ class DracoManipulationTCIContainer(TCIContainer):
 
         # Upperbody joints
         upperbody_joint = [
-            "neck_pitch",
-            "l_shoulder_fe",
-            "l_shoulder_aa",
-            "l_shoulder_ie",
-            "l_elbow_fe",
-            "l_wrist_ps",
+            "l_shoulder_pitch",
+            "l_shoulder_roll",
+            "l_shoulder_yaw",
+            "l_elbow_pitch",
+            "l_wrist_yaw",
+            "l_wrist_roll",
             "l_wrist_pitch",
-            "r_shoulder_fe",
-            "r_shoulder_aa",
-            "r_shoulder_ie",
-            "r_elbow_fe",
-            "r_wrist_ps",
+            "r_shoulder_pitch",
+            "r_shoulder_roll",
+            "r_shoulder_yaw",
+            "r_elbow_pitch",
+            "r_wrist_yaw",
+            "r_wrist_roll",
             "r_wrist_pitch",
         ]
         self._upper_body_task = BasicTask(
@@ -53,35 +54,35 @@ class DracoManipulationTCIContainer(TCIContainer):
         )
         # Lhand Pos Task
         self._lhand_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "l_hand_contact", save_data
+            robot, "LINK_XYZ", 3, "l_hand_pitch", save_data
         )
         # Rhand Pos Task
         self._rhand_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "r_hand_contact", save_data
+            robot, "LINK_XYZ", 3, "r_hand_pitch", save_data
         )
         # Lhand Ori Task
         self._lhand_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "l_hand_contact", save_data
+            robot, "LINK_ORI", 3, "l_hand_pitch", save_data
         )
         # Rhand Ori Task
         self._rhand_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "r_hand_contact", save_data
+            robot, "LINK_ORI", 3, "r_hand_pitch", save_data
         )
         # Rfoot Pos Task
         self._rfoot_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "r_foot_contact", save_data
+            robot, "LINK_XYZ", 3, "r_foot_lower_right_link", save_data
         )
         # Lfoot Pos Task
         self._lfoot_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "l_foot_contact", save_data
+            robot, "LINK_XYZ", 3, "l_foot_lower_right_link", save_data
         )
         # Rfoot Ori Task
         self._rfoot_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "r_foot_contact", save_data
+            robot, "LINK_ORI", 3, "r_foot_lower_right_link", save_data
         )
         # Lfoot Ori Task
         self._lfoot_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "l_foot_contact", save_data
+            robot, "LINK_ORI", 3, "l_foot_lower_right_link", save_data
         )
 
         self._task_list = [
@@ -155,8 +156,9 @@ class DracoManipulationTCIContainer(TCIContainer):
         # ======================================================================
         # Initialize Internal Constraint
         # ======================================================================
-        self._rolling_joint_constraint = DracoManipulationRollingJointConstraint(robot)
-        self._internal_constraint_list = [self._rolling_joint_constraint]
+        # self._rolling_joint_constraint = GR1ManipulationRollingJointConstraint(robot)
+        # self._internal_constraint_list = [self._rolling_joint_constraint]
+        self._internal_constraint_list = []
 
     @property
     def com_task(self):
