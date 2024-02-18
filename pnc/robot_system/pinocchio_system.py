@@ -11,6 +11,7 @@ import pinocchio as pin
 
 from .base import RobotSystem
 from util import geom
+import ipdb
 
 
 class PinocchioRobotSystem(RobotSystem):
@@ -143,6 +144,7 @@ class PinocchioRobotSystem(RobotSystem):
         joint_vel,
         b_cent=True,
     ):
+        # ipdb.set_trace()
         # assert len(joint_pos.keys()) == self._n_a
 
         self._q = np.zeros(self._n_q)
@@ -264,6 +266,7 @@ class PinocchioRobotSystem(RobotSystem):
         return np.copy(ret)
 
     def get_link_jacobian(self, link_id):
+        # print("Link id: ",link_id)
         frame_id = self._model.getFrameId(link_id)
         pin.computeJointJacobians(self._model, self._data, self._q)
         jac = pin.getFrameJacobian(

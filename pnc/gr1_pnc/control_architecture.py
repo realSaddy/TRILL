@@ -84,8 +84,8 @@ class GR1ManipulationControlArchitecture(ControlArchitecture):
             self._tci_container.com_task,
             self._tci_container.torso_ori_task,
             self._robot,
-            "l_foot_lower_right_link",
-            "r_foot_lower_right_link",
+            "left_foot_link",
+            "right_foot_link",
         )
         self._dcm_tm.nominal_com_height = walking_config["Initial Motion"]["COM Height"]
         self._dcm_tm.t_additional_init_transfer = walking_config["Duration"][

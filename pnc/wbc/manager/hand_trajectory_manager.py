@@ -149,7 +149,7 @@ class HandTrajectoryManager(object):
             np.zeros(3),
             np.zeros(3),
         )
-
+        # ipdb.set_trace
         if self._trajectory_mode == "interpolation":
             for i in range(3):
                 hand_pos_des[i] = interpolation.smooth_changing(

@@ -1,7 +1,7 @@
 import abc
 
 import numpy as np
-
+import ipdb
 
 class Task(abc.ABC):
     """
@@ -72,7 +72,6 @@ class Task(abc.ABC):
 
     @kp.setter
     def kp(self, value):
-        # print(value.shape[0], self._dim)
         assert value.shape[0] == self._dim
         self._kp = value
 
@@ -100,6 +99,7 @@ class Task(abc.ABC):
         acc_des (np.array):
             Acceleration desired
         """
+        # ipdb.set_trace()
         assert vel_des.shape[0] == self._dim
         assert acc_des.shape[0] == self._dim
         self._pos_des = pos_des

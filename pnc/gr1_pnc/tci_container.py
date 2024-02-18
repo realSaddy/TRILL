@@ -6,7 +6,7 @@ import numpy as np
 from pnc.wbc.basic_contact import SurfaceContact
 from pnc.wbc.basic_task import BasicTask
 from pnc.wbc.tci_container import TCIContainer
-
+import ipdb
 
 class GR1ManipulationTCIContainer(TCIContainer):
     def __init__(self, robot, config):
@@ -48,41 +48,48 @@ class GR1ManipulationTCIContainer(TCIContainer):
             "r_wrist_yaw",
             "r_wrist_roll",
             "r_wrist_pitch",
+            "head_yaw",
+            "head_pitch",
+            "head_roll",
+            # "waist_yaw",
+            # "waist_pitch",
+            # "waist_roll"
+            
         ]
         self._upper_body_task = BasicTask(
             robot, "SELECTED_JOINT", len(upperbody_joint), upperbody_joint, save_data
         )
         # Lhand Pos Task
         self._lhand_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "l_hand_pitch", save_data
+            robot, "LINK_XYZ", 3, "left_hand_link", save_data
         )
         # Rhand Pos Task
         self._rhand_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "r_hand_pitch", save_data
+            robot, "LINK_XYZ", 3, "right_hand_link", save_data
         )
         # Lhand Ori Task
         self._lhand_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "l_hand_pitch", save_data
+            robot, "LINK_ORI", 3, "left_hand_link", save_data
         )
         # Rhand Ori Task
         self._rhand_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "r_hand_pitch", save_data
+            robot, "LINK_ORI", 3, "right_hand_link", save_data
         )
         # Rfoot Pos Task
         self._rfoot_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "r_foot_lower_right_link", save_data
+            robot, "LINK_XYZ", 3, "right_foot_link", save_data
         )
         # Lfoot Pos Task
         self._lfoot_pos_task = BasicTask(
-            robot, "LINK_XYZ", 3, "l_foot_lower_right_link", save_data
+            robot, "LINK_XYZ", 3, "left_foot_link", save_data
         )
         # Rfoot Ori Task
         self._rfoot_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "r_foot_lower_right_link", save_data
+            robot, "LINK_ORI", 3, "right_foot_link", save_data
         )
         # Lfoot Ori Task
         self._lfoot_ori_task = BasicTask(
-            robot, "LINK_ORI", 3, "l_foot_lower_right_link", save_data
+            robot, "LINK_ORI", 3, "left_foot_link", save_data
         )
 
         self._task_list = [
@@ -133,6 +140,7 @@ class GR1ManipulationTCIContainer(TCIContainer):
         for task, hiearchy_key, gain_key in zip(
             self._task_list, hierachy_keys, gain_keys
         ):
+            # ipdb.set_trace()
             task.kp = np.array(kp_config[gain_key])
             task.kd = np.array(kd_config[gain_key])
             task.w_hierarchy = hierarchy_config[hiearchy_key]
@@ -142,12 +150,12 @@ class GR1ManipulationTCIContainer(TCIContainer):
         # ======================================================================
         # Rfoot Contact
         self._rfoot_contact = SurfaceContact(
-            robot, "r_foot_contact", 0.115, 0.065, 0.3, save_data
+            robot, "right_foot_link", 0.115, 0.065, 0.3, save_data
         )
         self._rfoot_contact.rf_z_max = 1e-3  # Initial rf_z_max
         # Lfoot Contact
         self._lfoot_contact = SurfaceContact(
-            robot, "l_foot_contact", 0.115, 0.065, 0.3, save_data
+            robot, "left_foot_link", 0.115, 0.065, 0.3, save_data
         )
         self._lfoot_contact.rf_z_max = 1e-3  # Initial rf_z_max
 

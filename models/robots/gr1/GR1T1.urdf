@@ -8,7 +8,7 @@
         discardvisual="false" />
   </mujoco>
   <link
-    name="base">
+    name="torso_link">
     <inertial>
       <origin
         xyz="-0.0508888422032162 0.000109183466089114 -0.0455794100581443"
@@ -52,6 +52,18 @@
           filename="./meshes/base.STL" />
       </geometry> -->
     </collision>
+  </link>
+  <joint name="torso_com" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.0310745 -0.000497416 0.137484"/>
+    <parent link="torso_link"/>
+    <child link="torso_com_link"/>
+  </joint>
+  <link name="torso_com_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
   </link>
   <link
     name="l_thigh_roll">
@@ -106,7 +118,7 @@
       xyz="-0.047999 0.105 -0.057493"
       rpy="0 0 0" />
     <parent
-      link="base" />
+      link="torso_link" />
     <child
       link="l_thigh_roll" />
     <axis
@@ -449,6 +461,19 @@
       velocity="8.69" />
   </joint>
 
+  <link name="left_foot_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_foot" type="fixed">
+    <origin xyz="0 0 -0.076" rpy="0 0 0" />
+    <parent link="l_foot_roll" />
+    <child link="left_foot_link" />
+  </joint>
+
   <link name="l_foot_upper_right_link"/>
   <joint name="l_foot_upper_right_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.107 -0.055 -0.05"/>
@@ -527,7 +552,7 @@
       xyz="-0.047999 -0.105 -0.057508"
       rpy="0 0 0" />
     <parent
-      link="base" />
+      link="torso_link" />
     <child
       link="r_thigh_roll" />
     <axis
@@ -869,6 +894,18 @@
       velocity="8.69" />
   </joint>
 
+  <link name="right_foot_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_foot" type="fixed">
+    <origin xyz="0 0 -0.076" rpy="0 0 0" />
+    <parent link="r_foot_roll" />
+    <child link="right_foot_link" />
+  </joint>
   <link name="r_foot_upper_right_link"/>
   <joint name="r_foot_upper_right_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.107 -0.055 -0.05"/>
@@ -942,12 +979,23 @@
   </link>
   <joint
     name="waist_yaw"
+    type="fixed">
+    <origin
+      xyz="0 0 0.0065"
+      rpy="0 0 0" />
+    <parent
+      link="torso_link" />
+    <child
+      link="waist_yaw" />
+  </joint>
+  <!-- <joint
+    name="waist_yaw"
     type="revolute">
     <origin
       xyz="0 0 0.0065"
       rpy="0 0 0" />
     <parent
-      link="base" />
+      link="torso_link" />
     <child
       link="waist_yaw" />
     <axis
@@ -957,7 +1005,7 @@
       upper="1.05"
       effort="33"
       velocity="6.28" />
-  </joint>
+  </joint> -->
   <link
     name="waist_pitch">
     <inertial>
@@ -999,6 +1047,17 @@
   </link>
   <joint
     name="waist_pitch"
+    type="fixed">
+    <origin
+      xyz="0 0 0.055"
+      rpy="0 0 0" />
+    <parent
+      link="waist_yaw" />
+    <child
+      link="waist_pitch" />
+  </joint>
+  <!-- <joint
+    name="waist_pitch"
     type="revolute">
     <origin
       xyz="0 0 0.055"
@@ -1014,7 +1073,7 @@
       upper="1.22"
       effort="33"
       velocity="6.28" />
-  </joint>
+  </joint> -->
   <link
     name="waist_roll">
     <inertial>
@@ -1056,6 +1115,17 @@
   </link>
   <joint
     name="waist_roll"
+    type="fixed">
+    <origin
+      xyz="0 0 0.085"
+      rpy="0 0 0" />
+    <parent
+      link="waist_pitch" />
+    <child
+      link="waist_roll" />
+  </joint>
+  <!-- <joint
+    name="waist_roll"
     type="revolute">
     <origin
       xyz="0 0 0.085"
@@ -1071,7 +1141,7 @@
       upper="0.7"
       effort="33"
       velocity="6.28" />
-  </joint>
+  </joint> -->
   <link
     name="head_yaw">
     <inertial>
@@ -1689,6 +1759,20 @@
       effort="2.35"
       velocity="10.47" />
   </joint>
+  
+  <link name="left_hand_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="left_hand" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="l_hand_pitch" />
+    <child link="left_hand_link" />
+  </joint>
+
   <link
     name="r_upper_arm_pitch">
     <inertial>
@@ -2119,5 +2203,16 @@
       effort="2.35"
       velocity="10.47" />
   </joint>
-
+  <link name="right_hand_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1e-9"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+  <joint name="right_hand" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="r_hand_pitch" />
+    <child link="right_hand_link" />
+  </joint>
 </robot>

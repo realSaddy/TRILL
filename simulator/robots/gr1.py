@@ -21,9 +21,9 @@ GR1_MAP = {
         "r_knee_pitch": "r_knee_pitch",
         "r_ankle_pitch": "r_ankle_pitch",
         "r_ankle_roll": "r_ankle_roll",
-        "waist_yaw": "waist_yaw",
-        "waist_pitch": "waist_pitch",
-        "waist_roll": "waist_roll",
+        # "waist_yaw": "waist_yaw",
+        # "waist_pitch": "waist_pitch",
+        # "waist_roll": "waist_roll",
         "l_shoulder_pitch": "l_shoulder_pitch",
         "l_shoulder_roll": "l_shoulder_roll",
         "l_shoulder_yaw": "l_shoulder_yaw",
@@ -55,9 +55,9 @@ GR1_MAP = {
         "r_knee_pitch": "r_knee_pitch",
         "r_ankle_pitch": "r_ankle_pitch",
         "r_ankle_roll": "r_ankle_roll",
-        "waist_yaw": "waist_yaw",
-        "waist_pitch": "waist_pitch",
-        "waist_roll": "waist_roll",
+        # "waist_yaw": "waist_yaw",
+        # "waist_pitch": "waist_pitch",
+        # "waist_roll": "waist_roll",
         "l_shoulder_pitch": "l_shoulder_pitch",
         "l_shoulder_roll": "l_shoulder_roll",
         "l_shoulder_yaw": "l_shoulder_yaw",
@@ -187,4 +187,4 @@ class GR1(HumanoidModel):
         Returns:
             dict: Dictionary containing arm-specific eef names
         """
-        return {"right": "r_hand_pitch", "left": "l_hand_pitch"}
+        return {"right": "right_mount", "left": "left_mount"}

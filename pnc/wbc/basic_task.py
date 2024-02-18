@@ -10,6 +10,7 @@ class BasicTask(Task):
     def __init__(self, robot, task_type, dim, target_id=None, data_save=False):
         super(BasicTask, self).__init__(robot, dim)
 
+        # breakpoint()
         self._target_id = target_id
         self._task_type = task_type
         self._b_data_save = data_save

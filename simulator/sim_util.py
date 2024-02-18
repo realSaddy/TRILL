@@ -6,6 +6,7 @@ import numpy as np
 from util import geom, liegroup
 
 
+import ipdb
 def get_mujoco_objects(sim):
     return sim.model._model, sim.data._data
 
@@ -36,6 +37,7 @@ def get_body_pos_vel(sim, robot):
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
 
+    # ipdb.set_trace()
     state = {
         "body_pos": {
             "pos": np.copy(data.qpos[joint_qposadr : joint_qposadr + 3]),
@@ -94,7 +96,7 @@ def set_motor_trq(sim, robot, command):
         actuator_id = mujoco.mj_name2id(
             model, mujoco.mjtObj.mjOBJ_ACTUATOR, mujoco_actuator_key
         )
-        # print(actuator_id)
+        # print(mujoco_actuator_key, actuator_id)
         trq_applied[actuator_id] = trq_des
     data.ctrl[list(trq_applied.keys())] = list(trq_applied.values())
 
@@ -110,6 +112,7 @@ def set_motor_pos(sim, robot, state):
         joint_qposadr = model.jnt_qposadr[joint_id]
         pos_applied[joint_qposadr] = pos_des
     data.qpos[list(pos_applied.keys())] = list(pos_applied.values())
+
 
 
 def set_ball_pos(sim, robot, state):
@@ -383,6 +386,7 @@ def get_trajectory(sim, robot):
     trajectory_data["rh_eef_quat"] = rh_eef_quat
     trajectory_data["lf_foot_quat"] = lf_foot_quat
     trajectory_data["rf_foot_quat"] = rf_foot_quat
+    # ipdb.set_trace()
 
     return trajectory_data
 
@@ -483,5 +487,7 @@ def transform_local_trajectory(sim, robot, global_trajectory):
     trajectory_data["rh_eef_quat"] = rh_eef_quat
     trajectory_data["lf_foot_quat"] = lf_foot_quat
     trajectory_data["rf_foot_quat"] = rf_foot_quat
+    
+    # ipdb.set_trace()
 
     return trajectory_data

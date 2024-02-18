@@ -4,6 +4,7 @@ from pnc.gr1_pnc.state_machine import LocomanipulationState
 from pnc.interrupt_logic import InterruptLogic
 
 COM_VEL_THRE = 0.01
+import ipdb
 
 
 class GR1ManipulationInterruptLogic(InterruptLogic):
@@ -72,6 +73,7 @@ class GR1ManipulationInterruptLogic(InterruptLogic):
 
     @rh_target_pos.setter
     def rh_target_pos(self, value):
+        # ipdb.set_trace()
         self._rh_target_pos = value
 
     @property
@@ -154,6 +156,7 @@ class GR1ManipulationInterruptLogic(InterruptLogic):
 
     def process_interrupts(self):
         if self._standby:
+            # ipdb.set_trace()
             self._control_architecture._manipulation.rh_target_pos = self._rh_target_pos
             self._control_architecture._manipulation.rh_waypoint_pos = (
                 self._rh_waypoint_pos

@@ -6,6 +6,7 @@ import numpy as np
 from pnc.gr1_pnc.interface import GR1ManipulationInterface
 from util import geom
 
+import ipdb
 
 class WheeledArmController(object):
     def __init__(self) -> None:
@@ -167,6 +168,7 @@ class GR1Controller(object):
         self.reset()
 
     def reset(self, initial_pos=None):
+        # ipdb.set_trace()
         self._robot_target["joint_pos"].update(self._init_state["Joint Pos"])
         self._robot_target["joint_vel"].update(
             {key: 0.0 for key in self._robot_target["joint_pos"].keys()}
@@ -284,6 +286,7 @@ class GR1Controller(object):
         rh_target_quat = geom.rot_to_quat(rh_target_rot)
         lh_target_quat = geom.rot_to_quat(lh_target_rot)
 
+        # ipdb.set_trace()
         self._interface.interrupt_logic.rh_target_pos = rh_target_pos
         self._interface.interrupt_logic.rh_target_quat = rh_target_quat
         self._interface.interrupt_logic.lh_target_pos = lh_target_pos

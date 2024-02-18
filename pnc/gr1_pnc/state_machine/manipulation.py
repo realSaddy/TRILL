@@ -5,6 +5,7 @@ from pnc.gr1_pnc.state_provider import GR1ManipulationStateProvider
 from pnc.state_machine import StateMachine
 from util import geom
 
+import ipdb
 
 class Manipulation(StateMachine):
     def __init__(self, id, tm, hm, fm, robot):
@@ -50,6 +51,7 @@ class Manipulation(StateMachine):
         target_lh_iso[0:3, 0:3] = geom.quat_to_rot(self._lh_target_quat)
         target_lh_iso[0:3, 3] = self._lh_target_pos
 
+        # ipdb.set_trace()
         self._trajectory_managers["rhand"].initialize_hand_pose(
             self._start_time, self._moving_duration, target_rh_iso
         )
@@ -120,6 +122,7 @@ class Manipulation(StateMachine):
 
     @rh_target_pos.setter
     def rh_target_pos(self, value):
+        # ipdb.set_trace()
         self._rh_target_pos = value
 
     @property
