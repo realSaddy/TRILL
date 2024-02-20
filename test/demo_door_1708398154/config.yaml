@@ -12,19 +12,19 @@ Action:
       - 0.5
       - 0.6
       left_quat:
-      - .0
-      - .0
-      - .0
-      - 1.0
+      - 1
+      - 0
+      - 0
+      - 0
       right_pos:
       - 0.1
       - -0.5
       - 0.6
       right_quat:
-      - 0.0
-      - 0.0
-      - 0.0
-      - 1.0
+      - 1
+      - 0
+      - 0
+      - 0
   Map:
     aux: null
     gripper:
@@ -130,23 +130,23 @@ Manipulation:
   Hand Velocity Max: 10.0
   Initial Target:
     LH Pos:
-      - -0.24
-      - -0.34
-      - 0.92
+    - -0.24
+    - -0.34
+    - 0.92
     LH Quat:
-      - .61
-      - -0.35
-      - .61
-      - -0.35
+    - 0.61
+    - -0.35
+    - 0.61
+    - -0.35
     RH Pos:
-      - -0.24
-      - 0.34
-      - 0.92
+    - -0.24
+    - 0.34
+    - 0.92
     RH Quat:
-      - -0.61
-      - -0.35
-      - -0.61
-      - -0.35
+    - -0.61
+    - -0.35
+    - -0.61
+    - -0.35
   Trajectory Mode: interpolation
   Workspace:
     LH Max:
@@ -182,6 +182,9 @@ Simulation:
     - 1.0
     - 0.0
     Joint Pos:
+      head_pitch: 0.0
+      head_roll: 0.0
+      head_yaw: 0.0
       l_ankle_pitch: -0.7854
       l_ankle_roll: -0.087266
       l_elbow_pitch: -1.5708
@@ -208,9 +211,6 @@ Simulation:
       r_wrist_pitch: 0.0
       r_wrist_roll: 0.0
       r_wrist_yaw: 0.0
-      head_yaw: 0.0
-      head_pitch: 0.0
-      head_roll: 0.0
   Save Data: true
   Save Frequency: 1
   Verbose: true
@@ -300,9 +300,6 @@ Whole-Body Contol:
     - 0
     - 0
     - 0
-    # - 10
-    # - 10
-    # - 10
   kp:
     CAM:
     - 0.0
@@ -325,9 +322,9 @@ Whole-Body Contol:
     - 50.0
     - 50.0
     Hand Quat:
-    - 50.0
-    - 50.0
-    - 50.0
+    - 0.0
+    - 0.0
+    - 0.0
     Torso:
     - 200
     - 200
@@ -350,6 +347,3 @@ Whole-Body Contol:
     - 10
     - 10
     - 10
-    # - 600
-    # - 600
-    # - 600

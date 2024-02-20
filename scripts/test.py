@@ -12,7 +12,7 @@ from simulator.recorder import HDF5Recorder
 import time
 import argparse
 import mujoco
-from mujoco import viewer
+# from mujoco import viewer
 import cv2
 
 import ipdb
@@ -67,8 +67,8 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
 
     init_time = env.cur_time
     
-    # left_pos =  np.array([.2, 0.3 , .1])
-    # right_pos = np.array([.2, -0.3,  .1 ])
+    left_pos =  np.array([.1, 0.5 , .6])
+    right_pos = np.array([.1, -0.5,  .6 ])
     # left_pos =  np.array([-.1, -0.32 , -1.4])
     # right_pos = np.array([-.1, .32, -1.4])
     # target_pos = np.array([0.22,-0.35, -0.1 ])
@@ -82,27 +82,27 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
         action['subtask'] = 0
         action['locomotion'] = 0
 
-        # rh_target_pos = right_pos
-        # lh_target_pos = left_pos
+        rh_target_pos = right_pos
+        lh_target_pos = left_pos
         # lh_input = geom.euler_to_rot(np.array([0, 0, 0]))
         # rh_input = geom.euler_to_rot(np.array([0, 0, 0]))
 
         # rh_target_rot = np.dot(rh_input, RIGHTFORWARD_GRIPPER)
         # lh_target_rot = np.dot(lh_input, RIGHTFORWARD_GRIPPER)
-        # action['trajectory']['left_pos'] = lh_target_pos
-        # action['trajectory']['right_pos'] = rh_target_pos
+        action['trajectory']['left_pos'] = lh_target_pos
+        action['trajectory']['right_pos'] = rh_target_pos
         # action['trajectory']['right_quat'] = geom.rot_to_quat(rh_target_rot)
         # action['trajectory']['left_quat'] = geom.rot_to_quat(lh_target_rot)
         
-        action['trajectory']['left_pos'] = np.array([-0.24, -0.34, 0.92])
-        action['trajectory']['right_pos'] = np.array([-0.24, 0.34, 0.92])
-        action['trajectory']['right_quat'] = np.array([-0.61, -0.35, -0.61, -0.35])
-        action['trajectory']['left_quat'] = np.array([0.61, -0.35, .61, -0.35])
+        # action['trajectory']['left_pos'] = np.array([0.24, -0.34, 0.1])
+        # action['trajectory']['right_pos'] = np.array([0.24, 0.34, 0.1])
+        # action['trajectory']['right_quat'] = np.array([-0.61, -0.35, -0.61, -0.35])
+        # action['trajectory']['left_quat'] = np.array([0.61, -0.35, .61, -0.35])
         
         # ipdb.set_trace()
         env.step(action)
 
-        if env.cur_time > 3.0:
+        if env.cur_time > 50.0:
             done = True
 
     recorder.close()
