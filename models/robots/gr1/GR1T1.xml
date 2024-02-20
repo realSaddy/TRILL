@@ -216,7 +216,7 @@
                           <!-- <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.75294 0.75294 0.75294 1" mesh="l_hand_pitch"/> -->
                           <geom size="0.02 0.02 0.02" pos="0 0 -0.07" type="box" rgba="0.75294 0.75294 0.75294 1"/>
                           <body name="left_eef" pos="0 0 0" quat="0.707107 0 0 0.707107">
-                            <body name="left_mount" quat="0 1 0 0"/>
+                            <body name="left_mount" quat="0 0 1 0"/>
                             <body name="left_hand" pos="0 0 0"/>
                           </body>
                         </body>
@@ -262,7 +262,7 @@
                           <!-- <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.75294 0.75294 0.75294 1" mesh="r_hand_pitch"/> -->
                           <geom size="0.02 0.02 0.04" pos="0 0 -0.07" type="box" rgba="0.75294 0.75294 0.75294 1"/>
                           <body name="right_eef" pos="0 0 0" quat="-0.707107 0 0 0.707107">
-                            <body name="right_mount" quat="0 1 0 0"/>
+                            <body name="right_mount" quat="0 0 1 0"/>
                             <body name="right_hand" pos="0 0 0"/>
                           </body>
                         </body>

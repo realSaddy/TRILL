@@ -8,23 +8,23 @@ Action:
     locomotion: 0
     trajectory:
       left_pos:
+      - 0.2
       - 0.1
-      - 0.5
-      - 0.6
+      - 0.4
       left_quat:
-      - .0
-      - .0
-      - .0
-      - 1.0
+      - 0.06
+      - -0.31
+      - -0.06
+      - 0.95
       right_pos:
-      - 0.1
-      - -0.5
-      - 0.6
+      - 0.2
+      - -0.1
+      - 0.4
       right_quat:
-      - 0.0
-      - 0.0
-      - 0.0
-      - 1.0
+      - -0.06
+      - -0.31
+      - -0.06
+      - 0.95
   Map:
     aux: null
     gripper:
@@ -175,12 +175,12 @@ Simulation:
     Body Pos:
     - 0.0
     - 0.0
-    - 0.72
+    - 0.73
     Body Quat:
     - 0.0
     - 0.0
-    - 1.0
     - 0.0
+    - 1.0
     Joint Pos:
       l_ankle_pitch: -0.7854
       l_ankle_roll: -0.087266
@@ -217,18 +217,18 @@ Simulation:
 Walking:
   Alpha DS: 0.5
   Duration:
-    Additional Inititial Transfer: 0.0
+    Additional Inititial Transfer: 1.0
     Contact Trans: 1.0
-    Initial Stand: 0.1
+    Initial Stand: 3
     RF Z Max: 0.03
-    Swing: 1
+    Swing: .8
   Initial Motion:
     Backward Step: -0.2
-    COM Height: 0.67
-    Footwidth: 0.3
+    COM Height: 0.54
+    Footwidth: 0.4
     Forward Step: 0.2
     Strafe Distance: 0.1
-    Swing Height: 0.04
+    Swing Height: 0.09
     Trun Angle: 0.61416
   Percentage Settle: 0.9
 Whole-Body Contol:
@@ -271,35 +271,35 @@ Whole-Body Contol:
     - 30.0
     - 30.0
     Hand Pos:
-    - 0
-    - 0
-    - 0
+    - 100
+    - 100
+    - 500
     Hand Quat:
-    - 0
-    - 0
-    - 0
+    - 100
+    - 100
+    - 100
     Torso:
     - 20
     - 20
     - 20
     Upper Body:
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
-    - 0
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
     # - 10
     # - 10
     # - 10
@@ -321,35 +321,35 @@ Whole-Body Contol:
     - 350
     - 350
     Hand Pos:
-    - 50.0
-    - 50.0
-    - 50.0
+    - 300.0
+    - 300.0
+    - 1650.0
     Hand Quat:
-    - 50.0
-    - 50.0
-    - 50.0
+    - 190.0
+    - 300.0
+    - 190.0
     Torso:
     - 200
     - 200
     - 200
     Upper Body:
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 50
-    - 10
-    - 10
-    - 10
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 40
+    - 20
+    - 20
+    - 20
     # - 600
     # - 600
     # - 600
