@@ -217,20 +217,20 @@ Simulation:
 Walking:
   Alpha DS: 0.5
   Duration:
-    Additional Inititial Transfer: 1.0
+    Additional Inititial Transfer: .5
     Contact Trans: 1.0
-    Initial Stand: 3
-    RF Z Max: 0.03
-    Swing: .8
+    Initial Stand: 1.5
+    RF Z Max: 0.05
+    Swing: 1
   Initial Motion:
     Backward Step: -0.2
-    COM Height: 0.54
-    Footwidth: 0.4
+    COM Height: 0.59
+    Footwidth: 0.34
     Forward Step: 0.2
-    Strafe Distance: 0.1
-    Swing Height: 0.09
-    Trun Angle: 0.61416
-  Percentage Settle: 0.9
+    Strafe Distance: 0.2
+    Swing Height: 0.04
+    Trun Angle: .61416
+  Percentage Settle: 0.99
 Whole-Body Contol:
   Hierarchy:
     CAM: 0.0

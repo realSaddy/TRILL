@@ -67,8 +67,8 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
 
     init_time = env.cur_time
     
-    left_pos =  np.array([.1, 0.5 , .3])
-    right_pos = np.array([.1, -0.5,  .3 ])
+    left_pos =  np.array([.1, 0.1 , .1])
+    right_pos = np.array([.1, -0.1,  .1 ])
     # left_pos =  np.array([-.1, -0.32 , -1.4])
     # right_pos = np.array([-.1, .32, -1.4])
     # target_pos = np.array([0.22,-0.35, -0.1 ])
@@ -80,12 +80,12 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
         action['gripper'] = {}
         action['aux'] = {}
         action['subtask'] = 0
-        action['locomotion'] = 0
+        action['locomotion'] = 1
 
         rh_target_pos = right_pos
         lh_target_pos = left_pos
-        lh_input = geom.euler_to_rot(np.array([.7, 0, 0]))
-        rh_input = geom.euler_to_rot(np.array([-.7, 0, 0]))
+        lh_input = geom.euler_to_rot(np.array([0, 0, 0]))
+        rh_input = geom.euler_to_rot(np.array([0, 0, 0]))
 
         rh_target_rot = np.dot(rh_input, RIGHTFORWARD_GRIPPER)
         lh_target_rot = np.dot(lh_input, RIGHTFORWARD_GRIPPER)
@@ -102,7 +102,7 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
         # ipdb.set_trace()
         env.step(action)
 
-        if env.cur_time > 4.0:
+        if env.cur_time > 12.0:
             done = True
 
     recorder.close()
