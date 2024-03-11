@@ -213,9 +213,9 @@ Simulation:
       head_roll: 0.0
   Save Data: true
   Save Frequency: 1
-  Verbose: true
+  Verbose: false
 Walking:
-  Alpha DS: 0.5
+  Alpha DS: 0.7
   Duration:
     Additional Inititial Transfer: .5
     Contact Trans: 1.0
@@ -227,10 +227,10 @@ Walking:
     COM Height: 0.59
     Footwidth: 0.34
     Forward Step: 0.2
-    Strafe Distance: 0.2
+    Strafe Distance: 0.3
     Swing Height: 0.04
     Trun Angle: .61416
-  Percentage Settle: 0.99
+  Percentage Settle: 0.999
 Whole-Body Contol:
   Hierarchy:
     CAM: 0.0
@@ -240,7 +240,7 @@ Whole-Body Contol:
     Hand Pos Min: 2
     Hand Quat Max: 10
     Hand Quat Min: 2
-    Swing Foot: 30.0
+    Swing Foot: 40.0
     Torso: 200.0
     Upper Body: 1.0
   Integration:
@@ -309,9 +309,9 @@ Whole-Body Contol:
     - 0.0
     - 0.0
     COM:
-    - 100
-    - 100
-    - 100
+    - 275
+    - 275
+    - 275
     Foot Pos:
     - 350
     - 350

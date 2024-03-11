@@ -48,8 +48,8 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
         save_path = None
     renderer = CV2Renderer(
         device_id=-1, sim=env.sim, cam_name=cam_name, gui=gui, save_path=save_path,
-        width=1600,
-        height=1600,
+        width=720,
+        height=600,
     )
     # recorder = None
     recorder = HDF5Recorder(
@@ -88,25 +88,43 @@ def main(gui, env_type, cam_name="upview", subtask=0, save_video=True):
         lh_input = geom.euler_to_rot(np.array([0, 0, 0]))
         rh_input = geom.euler_to_rot(np.array([0, 0, 0]))
 
+        # phase = (env.cur_time-init_time)/3.0
+        # if env.cur_time < 6.0 + init_time:
+        #     lh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([1, 0, 0]))
+        #     rh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([1, 0, 0]))
+        # elif env.cur_time < 12.0  + init_time:
+        #     lh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([0, 1, 0]))
+        #     rh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([0, 1, 0]))
+        # elif env.cur_time < 18.0  + init_time:
+        #     lh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([0, 0, 1]))
+        #     rh_input = geom.euler_to_rot(-0.3*np.pi*np.sin(0.5*np.pi*phase)*np.array([0, 0, 1]))
+        # if env.cur_time < 6.0 + init_time:
+        #     lh_target_pos = left_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([1, 0, 0])
+        #     rh_target_pos = right_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([1, 0, 0])
+        # elif env.cur_time < 12.0 + init_time:
+        #     lh_target_pos = left_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([0, 1, 0])
+        #     rh_target_pos = right_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([0, 1, 0])
+        # else:
+        #     lh_target_pos = left_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([0, 0, 1])
+            # rh_target_pos = right_pos + 0.5*np.sin(0.5*np.pi*phase)*np.array([0, 0, 1])
+
+
+       
         rh_target_rot = np.dot(rh_input, RIGHTFORWARD_GRIPPER)
         lh_target_rot = np.dot(lh_input, RIGHTFORWARD_GRIPPER)
         action['trajectory']['left_pos'] = lh_target_pos
         action['trajectory']['right_pos'] = rh_target_pos
         action['trajectory']['right_quat'] = geom.rot_to_quat(rh_target_rot)
         action['trajectory']['left_quat'] = geom.rot_to_quat(lh_target_rot)
-        # ipdb.set_trace()
-        # action['trajectory']['left_pos'] = np.array([0.24, -0.34, 0.1])
-        # action['trajectory']['right_pos'] = np.array([0.24, 0.34, 0.1])
-        # action['trajectory']['right_quat'] = np.array([-0.61, -0.35, -0.61, -0.35])
-        # action['trajectory']['left_quat'] = np.array([0.61, -0.35, .61, -0.35])
-        
-        # ipdb.set_trace()
-        before = time.time()
-        env.step(action)
-        print("took "+str(time.time()-before))
 
-        if env.cur_time > 15.0:
+       
+
+        env.step(action)
+
+        if env.cur_time > 24.0:
             done = True
+        # done = env.get_done()
+
 
     recorder.close()
 
