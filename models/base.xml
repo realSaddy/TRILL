@@ -1,8 +1,8 @@
 <!-- This is the base xml for all physics simulations. Set global configs here. -->
 <mujoco model="base">
     <compiler angle="radian" autolimits="true" meshdir="./meshes/" inertiagrouprange="0 0" />
-    <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" timestep="0.001" />
-    <option integrator="RK4" solver="PGS" iterations="5"  gravity='0 0 -9.81'/>
+    <option impratio="20" cone="elliptic" density="1.2" viscosity="0.00002" timestep="0.002" />
+    <option integrator="RK4" solver="PGS" iterations="50" gravity='0 0 -9.81'/>
     <size memory="256M"/>
   <asset>
   </asset>

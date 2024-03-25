@@ -172,14 +172,14 @@ class EnvWrapper(gym.Env):
         self._cur_action["trajectory"]["right_pos"] += act_right_pos
         self._cur_action["trajectory"]["left_pos"] += act_left_pos
 
-        # act_trajecory_right_rot = (
-        #     R.from_quat(self._cur_action["trajectory"]["right_quat"]).as_matrix()
-        #     @ R.from_quat(act_right_quat).as_matrix()
-        # )
-        # act_trajecory_left_rot = (
-        #     R.from_quat(self._cur_action["trajectory"]["left_quat"]).as_matrix()
-        #     @ R.from_quat(act_left_quat).as_matrix()
-        # )
+        act_trajecory_right_rot = (
+            R.from_quat(self._cur_action["trajectory"]["right_quat"]).as_matrix()
+            @ R.from_quat(act_right_quat).as_matrix()
+        )
+        act_trajecory_left_rot = (
+            R.from_quat(self._cur_action["trajectory"]["left_quat"]).as_matrix()
+            @ R.from_quat(act_left_quat).as_matrix()
+        )
 
         # act_trajecory_right_rot = R.from_quat(self._cur_action['trajectory']['right_quat']).as_matrix() @ R.from_euler('xyz', act_right_euler).as_matrix()
         # act_trajecory_left_rot = R.from_quat(self._cur_action['trajectory']['left_quat']).as_matrix() @ R.from_euler('xyz', act_left_euler).as_matrix()

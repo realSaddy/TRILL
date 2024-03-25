@@ -6,14 +6,13 @@ import numpy as np
 from util import geom, liegroup
 
 
-import ipdb
 def get_mujoco_objects(sim):
     return sim.model._model, sim.data._data
 
 
 def get_link_iso(sim, robot, link_name):
     model, data = get_mujoco_objects(sim)
-    link_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, link_name)
+    link_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix + link_name)
     pos = np.array(data.xpos[link_id])
     quat = np.array(data.xquat[link_id])[[1, 2, 3, 0]]
     rot = geom.quat_to_rot(quat)
@@ -22,7 +21,7 @@ def get_link_iso(sim, robot, link_name):
 
 def get_link_vel(sim, robot, link_name):
     model, data = get_mujoco_objects(sim)
-    link_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, link_name)
+    link_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_XBODY, robot.naming_prefix +link_name)
     velp = np.copy(data.cvel(link_id))[:3]
     velr = np.copy(data.cvel(link_id))[3:]
     vel = np.concatenate((velr, velp))
@@ -37,7 +36,6 @@ def get_body_pos_vel(sim, robot):
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
 
-    # ipdb.set_trace()
     state = {
         "body_pos": {
             "pos": np.copy(data.qpos[joint_qposadr : joint_qposadr + 3]),
@@ -96,7 +94,7 @@ def set_motor_trq(sim, robot, command):
         actuator_id = mujoco.mj_name2id(
             model, mujoco.mjtObj.mjOBJ_ACTUATOR, mujoco_actuator_key
         )
-        # print(mujoco_actuator_key, actuator_id)
+        # print(actuator_id)
         trq_applied[actuator_id] = trq_des
     data.ctrl[list(trq_applied.keys())] = list(trq_applied.values())
 
@@ -112,7 +110,6 @@ def set_motor_pos(sim, robot, state):
         joint_qposadr = model.jnt_qposadr[joint_id]
         pos_applied[joint_qposadr] = pos_des
     data.qpos[list(pos_applied.keys())] = list(pos_applied.values())
-
 
 
 def set_ball_pos(sim, robot, state):
@@ -154,7 +151,6 @@ def set_body_pos_vel(sim, robot, state):
     )
     joint_qposadr = model.jnt_qposadr[joint_id]
     joint_qveladr = model.jnt_dofadr[joint_id]
-
     data.qpos[joint_qposadr : joint_qposadr + 7] = np.concatenate(
         (state["body_pos"]["pos"], state["body_pos"]["quat"][[3, 0, 1, 2]])
     )
@@ -277,8 +273,8 @@ def get_sensor_data(sim, robot):
     sensor_data["base_joint_lin_vel"] = base_joint_lin_vel
     sensor_data["base_joint_ang_vel"] = base_joint_ang_vel
 
-    rf_height = get_link_iso(sim, robot, "link_left_foot")[2, 3]
-    lf_height = get_link_iso(sim, robot, "link_right_foot")[2, 3]
+    rf_height = get_link_iso(sim, robot, "left_foot")[2, 3]
+    lf_height = get_link_iso(sim, robot, "right_foot")[2, 3]
 
     sensor_data["b_rf_contact"] = True if rf_height <= 0.01 else False
     sensor_data["b_lf_contact"] = True if lf_height <= 0.01 else False
@@ -386,8 +382,7 @@ def get_trajectory(sim, robot):
     trajectory_data["rh_eef_quat"] = rh_eef_quat
     trajectory_data["lf_foot_quat"] = lf_foot_quat
     trajectory_data["rf_foot_quat"] = rf_foot_quat
-    # ipdb.set_trace()
-
+    
     return trajectory_data
 
 
@@ -487,7 +482,5 @@ def transform_local_trajectory(sim, robot, global_trajectory):
     trajectory_data["rh_eef_quat"] = rh_eef_quat
     trajectory_data["lf_foot_quat"] = lf_foot_quat
     trajectory_data["rf_foot_quat"] = rf_foot_quat
-    
-    # ipdb.set_trace()
 
     return trajectory_data

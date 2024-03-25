@@ -13,8 +13,6 @@ from simulator.grippers import SakeEZGripper
 from simulator.controllers import GR1Controller
 import simulator.sim_util as sim_util
 
-import ipdb
-
 from robosuite.models.base import MujocoXML
 from robosuite.utils.binding_utils import MjSim
 
@@ -47,8 +45,6 @@ class BaseEnv:
         self.delay = None
 
     def reset(self, subtask=0, initial_pos=None, initial_qpos=None, **kwargs):
-        # print("checkpoint1")
-        # ipdb.set_trace()
         self.sim.reset()
         self._reset_robot(initial_pos)
         self._reset_objects()
@@ -56,15 +52,7 @@ class BaseEnv:
         if initial_qpos is not None:
             self._reset_initial_qpos(initial_qpos)
 
-        # print(sim_util.get_joint_state(self.sim, self.robot)["joint_pos"])
-        # print("checkpoint1: before forward")
-        # ipdb.set_trace()
-
         self.sim.forward()
-
-        # print(sim_util.get_joint_state(self.sim, self.robot)["joint_pos"])
-        # print("checkpoint1: after forward")
-        # ipdb.set_trace()
 
         self._cur_sim_time = 0.0
         self._cur_wbc_time = 0.0
@@ -80,8 +68,6 @@ class BaseEnv:
         }  # THIS IS A DUMMY OBS
 
         while self._cur_sim_time < INIT_TIME:
-            # print("checkpoint2 {}".format(self._cur_sim_time))
-            # ipdb.set_trace()
             self._init_control()
             self.sim.step()
             self._cur_sim_time += SIM_TIME
@@ -99,13 +85,6 @@ class BaseEnv:
         return self._get_obs()
 
     def step(self, action):
-
-        # print(self.controller._robot_target["joint_pos"])
-        # print(sim_util.get_joint_state(self.sim, self.robot)["joint_pos"])
-        # print("checkpoint3 {}".format(self._cur_sim_time))
-        # ipdb.set_trace()
-
-        # breakpoint()
         if ("subtask" in action.keys()) and (action["subtask"]):
             self._subtask += 1
 
@@ -120,7 +99,7 @@ class BaseEnv:
             self._cur_action["locomotion"] = action["locomotion"]
             self._cur_action["trajectory"].update(action["trajectory"])
             self._cur_action["gripper"].update(action["gripper"])
-            # self._cur_action["aux"].update(action["aux"])
+            self._cur_action["aux"].update(action["aux"])
 
         prv_obs = self._get_obs()
         cur_cmd = self._get_cmd()
@@ -131,10 +110,9 @@ class BaseEnv:
             data={"action": cur_action, "observation": prv_obs},
         )
 
-        
         self.controller.update_trajectory(cur_cmd["trajectory"], cur_cmd["locomotion"])
         self.controller.update_gripper_target(cur_cmd["gripper"])
-        # self.controller.update_aux_target(cur_cmd["aux"])
+        self.controller.update_aux_target(cur_cmd["aux"])
 
         while self._cur_sim_time - self._cur_teleop_time < TELEOP_TIME:
             self._apply_control()
@@ -198,10 +176,10 @@ class BaseEnv:
             key: self.action_map["gripper"][key][int(value)]
             for key, value in self._cur_action["gripper"].items()
         }
-        # cur_cmd["aux"] = {
-        #     key: self.action_map["aux"][key][int(value)]
-        #     for key, value in self._cur_action["aux"].items()
-        # }
+        cur_cmd["aux"] = {
+            key: self.action_map["aux"][key][int(value)]
+            for key, value in self._cur_action["aux"].items()
+        }
 
         return cur_cmd
 
@@ -215,14 +193,7 @@ class BaseEnv:
                 self.grippers[key],
                 arm_name=self.robot.naming_prefix + self.robot._eef_name[key],
             )
-        # with open("robot_output.xml", "w") as f:
-        #     f.write(self.robot.get_xml())
-        # with open("world_before.xml", "w") as f:
-        #     f.write(self.world.get_xml())
-
         self.world.merge(self.robot)
-        with open("world_after.xml", "w") as f:
-            f.write(self.world.get_xml())
 
     def _reset_robot(self, initial_pos=None):
         self.controller = GR1Controller(self.config, PATH_TO_ROBOT_MODEL)
@@ -255,6 +226,9 @@ class BaseEnv:
     def _render(self):
         if self.renderer == None:
             return
+        elif type(self.renderer)==list:
+            for renderer in self.renderer:
+                renderer.render()
         else:
             return self.renderer.render()
 
@@ -277,14 +251,13 @@ class BaseEnv:
         self.controller.standby()
         sensor_data = sim_util.get_sensor_data(self.sim, self.robot)
         self.controller.update_sensor_data(sensor_data)
-        # sim_util.set_motor_impedance(
-        #     self.sim, self.robot, self.controller._robot_target, 500.0, 10
-        # )
+        sim_util.set_motor_impedance(
+            self.sim, self.robot, self.controller._robot_target, 500.0, 10
+        )
 
     def _apply_control(self):
         if self._cur_sim_time - self._cur_wbc_time >= WBC_TIME:
             sensor_data = sim_util.get_sensor_data(self.sim, self.robot)
-            # ipdb.set_trace()
             self.controller.update_sensor_data(sensor_data)
 
             control = self.controller.get_control()

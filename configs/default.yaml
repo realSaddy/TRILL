@@ -26,7 +26,11 @@ Action:
       - -0.06
       - 0.95
   Map:
-    aux: null
+    aux:
+      neck:
+        0: forward
+        1: down
+        2: up
     gripper:
       left:
         0: release
@@ -44,12 +48,29 @@ Action:
       6: turning_right
       7: balance
 Aux Control:
-  Action: null
+  Action:
+    neck:
+      forward: 
+        head_pitch: 0.0
+        head_roll: 0.0
+        head_yaw: 0.0
+      down: 
+        head_pitch: 0.3
+        head_roll: 0.0
+        head_yaw: 0.0
+      up: 
+        head_pitch: -0.3
+        head_roll: 0.0
+        head_yaw: 0.0
   Gain:
     kd:
-      neck_pitch: 2.0
+      head_pitch: 2.0
+      head_roll: 2.0
+      head_yaw: 2.0
     kp:
-      neck_pitch: 10.0
+      head_pitch: 10.0
+      head_roll: 10.0
+      head_yaw: 10.0
 Gripper Control:
   Action:
     left:
@@ -166,7 +187,7 @@ Manipulation:
     - -1
     - -1
 Simulation:
-  Control Period: 0.01
+  Control Period: 0.005
   Initial State:
     Aux Pos:
       head_pitch: 0.0
@@ -175,7 +196,7 @@ Simulation:
     Body Pos:
     - 0.0
     - 0.0
-    - 0.73
+    - 0.76
     Body Quat:
     - 0.0
     - 0.0
@@ -224,24 +245,24 @@ Walking:
     Swing: 1
   Initial Motion:
     Backward Step: -0.2
-    COM Height: 0.59
-    Footwidth: 0.34
+    COM Height: 0.7
+    Footwidth: 0.32
     Forward Step: 0.2
-    Strafe Distance: 0.3
-    Swing Height: 0.04
-    Trun Angle: .61416
+    Strafe Distance: 0.2
+    Swing Height: 0.07
+    Trun Angle: .31416
   Percentage Settle: 0.999
 Whole-Body Contol:
   Hierarchy:
-    CAM: 0.0
-    COM: 100.0
-    Contact Foot: 40.0
+    CAM: 2.0
+    COM: 20.0
+    Contact Foot: 60.0
     Hand Pos Max: 10
     Hand Pos Min: 2
     Hand Quat Max: 10
     Hand Quat Min: 2
     Swing Foot: 40.0
-    Torso: 200.0
+    Torso: 40.0
     Upper Body: 1.0
   Integration:
     Cutoff Frequency:
@@ -253,85 +274,35 @@ Whole-Body Contol:
     Q ddot: 1.0e-08
     RF: 1.0e-07
   Use Torque Limit: false
-  kd:
-    CAM:
-    - 0.0
-    - 0.0
-    - 0.0
-    COM:
-    - 5.0
-    - 5.0
-    - 5.0
-    Foot Pos:
-    - 30.0
-    - 30.0
-    - 30.0
-    Foot Quat:
-    - 30.0
-    - 30.0
-    - 30.0
-    Hand Pos:
-    - 100
-    - 100
-    - 500
-    Hand Quat:
-    - 100
-    - 100
-    - 100
-    Torso:
-    - 20
-    - 20
-    - 20
-    Upper Body:
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    - 20
-    # - 10
-    # - 10
-    # - 10
   kp:
+    COM:
+    - 400
+    - 400
+    - 400
     CAM:
     - 0.0
     - 0.0
     - 0.0
-    COM:
-    - 275
-    - 275
-    - 275
-    Foot Pos:
-    - 350
-    - 350
-    - 350
-    Foot Quat:
-    - 350
-    - 350
-    - 350
+    Torso:
+    - 100
+    - 100
+    - 100
     Hand Pos:
     - 300.0
     - 300.0
-    - 1650.0
-    Hand Quat:
-    - 190.0
     - 300.0
-    - 190.0
-    Torso:
-    - 200
-    - 200
-    - 200
+    Hand Quat:
+    - 200.0
+    - 200.0
+    - 200.0
+    Foot Pos:
+    - 500.0
+    - 500.0
+    - 500.0
+    Foot Quat:
+    - 500.0
+    - 500.0
+    - 500.0
     Upper Body:
     - 40
     - 40
@@ -353,3 +324,53 @@ Whole-Body Contol:
     # - 600
     # - 600
     # - 600
+  kd:
+    COM:
+    - 5.0
+    - 5.0
+    - 5.0
+    CAM:
+    - 10.0
+    - 10.0
+    - 10.0
+    Torso:
+    - 20
+    - 20
+    - 20
+    Hand Pos:
+    - 50
+    - 50
+    - 50
+    Hand Quat:
+    - 30
+    - 30
+    - 30
+    Foot Pos:
+    - 60.0
+    - 60.0
+    - 60.0
+    Foot Quat:
+    - 60.0
+    - 60.0
+    - 60.0
+    Upper Body:
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    - 20
+    # - 10
+    # - 10
+    # - 10
