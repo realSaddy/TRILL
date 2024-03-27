@@ -51,9 +51,9 @@ class GR1ManipulationTCIContainer(TCIContainer):
             "head_yaw",
             "head_pitch",
             "head_roll",
-            # "waist_yaw",
-            # "waist_pitch",
-            # "waist_roll"
+            "waist_yaw",
+            "waist_pitch",
+            "waist_roll"
             
         ]
         self._upper_body_task = BasicTask(

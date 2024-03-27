@@ -977,7 +977,7 @@
       </geometry> -->
     </collision>
   </link>
-  <joint
+  <!-- <joint
     name="waist_yaw"
     type="fixed">
     <origin
@@ -987,8 +987,8 @@
       link="torso_link" />
     <child
       link="waist_yaw" />
-  </joint>
-  <!-- <joint
+  </joint> -->
+  <joint
     name="waist_yaw"
     type="revolute">
     <origin
@@ -1005,7 +1005,7 @@
       upper="1.05"
       effort="33"
       velocity="6.28" />
-  </joint> -->
+  </joint>
   <link
     name="waist_pitch">
     <inertial>
@@ -1045,7 +1045,7 @@
       </geometry>
     </collision>
   </link>
-  <joint
+  <!-- <joint
     name="waist_pitch"
     type="fixed">
     <origin
@@ -1055,8 +1055,8 @@
       link="waist_yaw" />
     <child
       link="waist_pitch" />
-  </joint>
-  <!-- <joint
+  </joint> -->
+  <joint
     name="waist_pitch"
     type="revolute">
     <origin
@@ -1073,7 +1073,7 @@
       upper="1.22"
       effort="33"
       velocity="6.28" />
-  </joint> -->
+  </joint>
   <link
     name="waist_roll">
     <inertial>
@@ -1113,7 +1113,7 @@
       </geometry>
     </collision>
   </link>
-  <joint
+  <!-- <joint
     name="waist_roll"
     type="fixed">
     <origin
@@ -1123,8 +1123,8 @@
       link="waist_pitch" />
     <child
       link="waist_roll" />
-  </joint>
-  <!-- <joint
+  </joint> -->
+  <joint
     name="waist_roll"
     type="revolute">
     <origin
@@ -1141,7 +1141,7 @@
       upper="0.7"
       effort="33"
       velocity="6.28" />
-  </joint> -->
+  </joint>
   <link
     name="head_yaw">
     <inertial>

@@ -390,6 +390,7 @@ class IHWBC(object):
             sol_q_ddot, sol_rf = sol, None
 
         if contact_list is not None:
+            # print((np.shape(sa_ni_trc_bar_tr), np.shape(self._snf)))
             joint_trq_cmd = np.dot(
                 np.dot(sa_ni_trc_bar_tr, self._snf),
                 np.dot(self._mass_matrix, sol_q_ddot)

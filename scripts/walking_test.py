@@ -71,7 +71,7 @@ def main(gui, env_type, cam_name="upview", save_video=False):
     print("Press 'r' button for starting simuation.")
     while not keyboard.enable:
         pass
-
+    
     while not done:
 
         loco_cmd = keyboard.control

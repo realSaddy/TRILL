@@ -2,7 +2,7 @@ import numpy as np
 
 from pnc.data_saver import DataSaver
 from pnc.wbc.ihwbc.ihwbc import IHWBC
-
+import time
 # from pnc.wbc.ihwbc.ihwbc2 import IHWBC2
 from pnc.wbc.ihwbc.joint_integrator import JointIntegrator
 
@@ -14,22 +14,39 @@ class GR1ManipulationController(object):
         self._config = config
 
         # Initialize WBC
-        # (
-        #     l_jp_idx,
-        #     l_jd_idx,
-        #     r_jp_idx,
-        #     r_jd_idx,
-        #     neck_pitch_idx,
-        # ) = self._robot.get_q_dot_idx(
-        #     [
-        #         "l_knee_fe_jp",
-        #         "l_knee_fe_jd",
-        #         "r_knee_fe_jp",
-        #         "r_knee_fe_jd",
-        #         "neck_pitch",
-        #     ]
-        # )
+        (
+            head_roll_idx,
+            head_pitch_idx,
+            head_yaw_idx,
+            waist_roll_idx,
+            waist_pitch_idx,
+            waist_yaw_idx,
+        ) = self._robot.get_q_dot_idx(
+            [
+                "waist_roll",
+                "waist_pitch",
+                "waist_yaw",
+                "head_roll",
+                "head_pitch",
+                "head_yaw",
+            ]
+        )
         act_list = [False] * robot.n_floating + [True] * robot.n_a
+        # print((
+        #     head_roll_idx,
+        #     head_pitch_idx,
+        #     head_yaw_idx,
+        #     waist_roll_idx,
+        #     waist_pitch_idx,
+        #     waist_yaw_idx,
+        # ) )
+        # act_list[head_roll_idx] = False
+        # act_list[head_pitch_idx] = False
+        # act_list[head_yaw_idx] = False
+        # act_list[waist_roll_idx] = False
+        # act_list[waist_pitch_idx] = False
+        # act_list[waist_yaw_idx] = False
+
         # act_list[l_jp_idx] = False
         # act_list[r_jp_idx] = False
         # act_list[neck_pitch_idx] = False
@@ -97,6 +114,7 @@ class GR1ManipulationController(object):
             self._data_saver = DataSaver()
 
     def get_command(self):
+        start_cmdt = time.time()
         if self._b_first_visit:
             self.first_visit()
 
@@ -144,7 +162,7 @@ class GR1ManipulationController(object):
         )
 
         command["reaction_force"] = rf_cmd
-
+        # print("controller time for command: "+str(time.time()-start_cmdt))
         return command
 
     def first_visit(self):

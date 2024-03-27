@@ -1,6 +1,7 @@
 Action:
   Default:
     aux:
+      waist: 0
       neck: 0
     gripper:
       left: 0
@@ -27,6 +28,8 @@ Action:
       - 0.95
   Map:
     aux:
+      waist:
+        0: default
       neck:
         0: forward
         1: down
@@ -62,15 +65,26 @@ Aux Control:
         head_pitch: -0.3
         head_roll: 0.0
         head_yaw: 0.0
+    waist:
+      default: 
+        waist_pitch: 0.0
+        waist_roll: 0.0
+        waist_yaw: 0.0
   Gain:
     kd:
       head_pitch: 2.0
       head_roll: 2.0
       head_yaw: 2.0
+      waist_pitch: 20.0
+      waist_roll: 20.0
+      waist_yaw: 20.0
     kp:
       head_pitch: 10.0
       head_roll: 10.0
       head_yaw: 10.0
+      waist_pitch: 100.0
+      waist_roll: 100.0
+      waist_yaw: 100.0
 Gripper Control:
   Action:
     left:
@@ -193,6 +207,9 @@ Simulation:
       head_pitch: 0.0
       head_roll: 0.0
       head_yaw: 0.0
+      waist_pitch: 0.0
+      waist_roll: 0.0
+      waist_yaw: 0.0
     Body Pos:
     - 0.0
     - 0.0
@@ -232,6 +249,9 @@ Simulation:
       head_yaw: 0.0
       head_pitch: 0.0
       head_roll: 0.0
+      waist_yaw: 0.0
+      waist_pitch: 0.0
+      waist_roll: 0.0
   Save Data: true
   Save Frequency: 1
   Verbose: false
@@ -321,9 +341,9 @@ Whole-Body Contol:
     - 20
     - 20
     - 20
-    # - 600
-    # - 600
-    # - 600
+    - 600
+    - 600
+    - 600
   kd:
     COM:
     - 5.0
@@ -371,6 +391,6 @@ Whole-Body Contol:
     - 20
     - 20
     - 20
-    # - 10
-    # - 10
-    # - 10
+    - 100
+    - 100
+    - 100

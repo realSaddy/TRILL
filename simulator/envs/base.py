@@ -261,6 +261,28 @@ class BaseEnv:
             self.controller.update_sensor_data(sensor_data)
 
             control = self.controller.get_control()
+
+            del control['joint_pos']['waist_pitch']
+            del control['joint_pos']['waist_roll']
+            del control['joint_pos']['waist_yaw']
+            del control['joint_pos']['head_pitch']
+            del control['joint_pos']['head_roll']
+            del control['joint_pos']['head_yaw']
+
+            del control['joint_vel']['waist_pitch']
+            del control['joint_vel']['waist_roll']
+            del control['joint_vel']['waist_yaw']
+            del control['joint_vel']['head_pitch']
+            del control['joint_vel']['head_roll']
+            del control['joint_vel']['head_yaw']
+
+            del control['joint_trq']['waist_pitch']
+            del control['joint_trq']['waist_roll']
+            del control['joint_trq']['waist_yaw']
+            del control['joint_trq']['head_pitch']
+            del control['joint_trq']['head_roll']
+            del control['joint_trq']['head_yaw']
+            
             sim_util.set_motor_trq(self.sim, self.robot, control)
             self._record(
                 time_stamp=self._cur_wbc_time,
